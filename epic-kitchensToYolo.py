@@ -40,7 +40,7 @@ with open(sys.argv[2]) as csv_file:
             line_count += 1
         else:
             location = '/epic-kitchens/' + row[2] + '/rgb_frames/' + row[3] + '.tar'
-            img_name = './' + row[4].rjust(10, '0') + '.jpg'
+            img_name = './frame_' + row[4].rjust(10, '0') + '.jpg'
             location = location + ' ' + img_name
             bounding_boxes = x = ast.literal_eval(row[5])
             object_class = row[0] # Use id, a same class may have different names
