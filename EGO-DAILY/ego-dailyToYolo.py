@@ -44,8 +44,8 @@ def process_labels (filename, outputname):
                         row_split = row.split()
                         xmin = math.trunc(float(row_split[0]))
                         ymin = math.trunc(float(row_split[1]))
-                        xmax = xmin + math.trunc(float(row_split[2]))
-                        ymax = ymin + math.trunc(float(row_split[3]))
+                        xmax = math.trunc(float(row_split[2]))
+                        ymax = math.trunc(float(row_split[3]))
                         object_class = int(row_split[4])
                         bounding_boxes.append((xmin, ymin, xmax, ymax, object_class))
                         remaining_objects -= 1
