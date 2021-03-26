@@ -53,7 +53,7 @@ def process_labels (filename, outputname):
                             if 'run' not in location and 'bike' not in location: # Save only interior locations (eating, kitchens, office)
                                 output.write(location + ' ')
                                 for bb in bounding_boxes:
-                                    output.write(str(bb[0]) + ',' + str(bb[1]) + ',' + str(bb[2]) + ',' + str(bb[3]) + ',' + str(bb[4]) + ' ')
+                                    output.write(str(bb[0]) + ',' + str(bb[1]) + ',' + str(bb[2]) + ',' + str(bb[3]) + ',' + str(bb[4] - 1) + ' ')
                                 output.write('\n')
                             location = ''
                             remaining_objects = -2
