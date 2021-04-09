@@ -13,8 +13,8 @@ classes = []
 print('-------- PROCESSING CLASSES --------')
 
 with open('ego-daily_classes.txt','w') as classes_file:
-    classes_file.write('left_hand\n')
     classes_file.write('right_hand\n')
+    classes_file.write('left_hand\n')
     print('There are 2 classes.')
     
 
