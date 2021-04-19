@@ -28,8 +28,8 @@ class_dict = {}
 LabelData = namedtuple('LabelData', 'object_class bounding_box')
 ClassData = namedtuple('ClassData', 'new_id name')
 for index, label in labels.iterrows():
-    location = '/epic-kitchens/' + label['participant_id'] + '/rgb_frames/' + label['video_id'] + '.tar'
-    img_name = './frame_' + str(label['frame']).rjust(10, '0') + '.jpg'
+    location = '/epic-kitchens/' + label['participant_id'] + '/object_detection_images/' + label['video_id'] + '.tar'
+    img_name = './' + str(label['frame']).rjust(10, '0') + '.jpg'
     location = location + ' ' + img_name
     bounding_boxes = ast.literal_eval(label['bounding_boxes'])
     object_class = label['noun_class'] # Use id, a same class may have different names
