@@ -5,21 +5,12 @@ import ast
 import math
 
 if (len(sys.argv) != 3):
-    print('[ERROR] Expected filename with classes.')
-    print('Usage: python ego-dailyToYolo.py [train_object_labels] [test_object_labels]')
+    print('Usage: python egodaily_to_yolo.py [train_object_labels] [test_object_labels]')
     exit()
-
-classes = []
-print('-------- PROCESSING CLASSES --------')
-
-with open('ego-daily_classes.txt','w') as classes_file:
-    classes_file.write('right_hand\n')
-    classes_file.write('left_hand\n')
-    print('There are 2 classes.')
     
 
 print('-------- PROCESSING LABELS --------')
-def process_labels (filename, outputname):
+def process_labels (filename, outputname, oneclass = False):
     with open(filename) as file:
         with open(outputname, 'w') as output:
             lines = file.readlines()
@@ -47,13 +38,15 @@ def process_labels (filename, outputname):
                         xmax = math.trunc(float(row_split[2]))
                         ymax = math.trunc(float(row_split[3]))
                         object_class = int(row_split[4])
+                        if oneclass:
+                            object_class = 1
                         bounding_boxes.append((xmin, ymin, xmax, ymax, object_class))
                         remaining_objects -= 1
                         if remaining_objects == 0:
                             if 'run' not in location and 'bike' not in location: # Save only interior locations (eating, kitchens, office)
-                                output.write('/datasets/' + location + ' ')
+                                output.write('/datasets/' + location)
                                 for bb in bounding_boxes:
-                                    output.write(str(bb[0]) + ',' + str(bb[1]) + ',' + str(bb[2]) + ',' + str(bb[3]) + ',' + str(bb[4] - 1) + ' ')
+                                    output.write(' ' + str(bb[0]) + ',' + str(bb[1]) + ',' + str(bb[2]) + ',' + str(bb[3]) + ',' + str(bb[4] - 1))
                                 output.write('\n')
                             location = ''
                             remaining_objects = -2
@@ -61,5 +54,7 @@ def process_labels (filename, outputname):
                         
 
 
-process_labels(sys.argv[1], 'train.txt')
-process_labels(sys.argv[2], 'test.txt')
+process_labels(sys.argv[1], 'train_2hands.txt')
+process_labels(sys.argv[2], 'test_2hands.txt')
+process_labels(sys.argv[1], 'train_1hand.txt', oneclass=True)
+process_labels(sys.argv[2], 'test_1hand.txt', oneclass=True)
