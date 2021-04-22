@@ -11,7 +11,7 @@ for index, row in all_nouns.iterrows():
     nouns_list.append(row['class_key']) # Save the class key, the most generic name
 
 
-# Get interactive objects
+# Get interactive objects (over a 100 times in the action labels)
 interactive_nouns = pd.read_csv('downloaded-labels/EPIC_many_shot_nouns.csv')
 interactive_objects = set()
 for index, row in interactive_nouns.iterrows():
@@ -21,6 +21,20 @@ for index, row in interactive_nouns.iterrows():
 labels = pd.read_csv('downloaded-labels/EPIC_train_object_labels.csv')
 labels = labels.loc[labels['noun_class'].isin(interactive_objects)]
 labels = labels.loc[labels['participant_id'].isin(['P01','P02','P03','P04'])]
+
+# Get the 10 classes with the most labels
+dictionary = labels.noun_class.value_counts().to_dict()
+{k: v for k, v in sorted(dictionary.items(), key=lambda item: item[1], reverse=True)}
+
+i = 0
+final_objects = set()
+for key, value in dictionary.items():
+    if i > 10:
+        break
+    i += 1
+    final_objects.add(key)
+
+labels = labels.loc[labels['noun_class'].isin(final_objects)]
 
 # Process labels and classes
 labels_dict = {}
