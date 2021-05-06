@@ -10,7 +10,7 @@ if (len(sys.argv) != 3):
     
 
 print('-------- PROCESSING LABELS --------')
-def process_labels (filename, outputname, oneclass = False):
+def process_labels (filename, outputname, oneclass = False, test=False):
     with open(filename) as file:
         with open(outputname, 'w') as output:
             lines = file.readlines()
@@ -37,6 +37,9 @@ def process_labels (filename, outputname, oneclass = False):
                         ymin = math.trunc(float(row_split[1]))
                         xmax = math.trunc(float(row_split[2]))
                         ymax = math.trunc(float(row_split[3]))
+                        if test:
+                            xmax = xmin + xmax
+                            ymax = ymin + ymax
                         object_class = int(row_split[4])
                         if oneclass:
                             object_class = 1
@@ -55,6 +58,6 @@ def process_labels (filename, outputname, oneclass = False):
 
 
 process_labels(sys.argv[1], 'train_2hands.txt')
-process_labels(sys.argv[2], 'test_2hands.txt')
+process_labels(sys.argv[2], 'test_2hands.txt', test=True)
 process_labels(sys.argv[1], 'train_1hand.txt', oneclass=True)
-process_labels(sys.argv[2], 'test_1hand.txt', oneclass=True)
+process_labels(sys.argv[2], 'test_1hand.txt', oneclass=True, test=True)
