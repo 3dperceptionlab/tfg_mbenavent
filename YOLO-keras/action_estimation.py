@@ -69,7 +69,7 @@ class YOLO_np(object):
         self.hand_colors = get_colors(self.hand_classes_names)
         K.set_learning_phase(0)
         self.yolo_model = self._generate_model(os.path.expanduser(self.weights_path), len(self.class_names))
-        self.yolo_hand_model = self._generate_hand_model(os.path.expanduser(self.weights_path_hand), len(self.hand_classes_names))
+        self.yolo_hand_model = self._generate_model(os.path.expanduser(self.weights_path_hands), len(self.hand_classes_names))
 
     def _generate_model(self, weights_path, num_classes):
         '''to generate the bounding boxes'''
@@ -122,13 +122,13 @@ class YOLO_np(object):
         image_shape = tuple(reversed(image.size))
 
         start = time.time()
-        out_boxes, out_classes, out_scores = self.predict(image_data, image_shape, self.yolo_model, self.class_names)
+        out_boxes, out_classes, out_scores = self.predict(image_data, image_shape, self.model_type, self.yolo_model, self.class_names)
         print('Found {} boxes for {}'.format(len(out_boxes), 'img'))
         end = time.time()
         print("Inference time: {:.8f}s".format(end - start))
 
         start = time.time()
-        hand_out_boxes, hand_out_classes, hand_out_scores = self.predict(image_data, image_shape, self.yolo_hand_model, self.hand_classes_names)
+        hand_out_boxes, hand_out_classes, hand_out_scores = self.predict(image_data, image_shape,self.model_type_hand, self.yolo_hand_model, self.hand_classes_names)
         print('Found {} boxes for {}'.format(len(hand_out_boxes), 'img'))
         end = time.time()
         print("Inference time: {:.8f}s".format(end - start))
@@ -327,6 +327,7 @@ def detect_img(yolo):
         else:
             r_image, _, _, _ = yolo.detect_image(image)
             r_image.show()
+            r_image.save('test.jpg')
 
 
 def main():
