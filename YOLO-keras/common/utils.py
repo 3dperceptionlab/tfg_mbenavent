@@ -109,17 +109,29 @@ def get_dataset(annotation_file, shuffle=True):
     return lines
 
 def draw_label(image, text, color, coords):
+    height, width, channels = image.shape
     font = cv2.FONT_HERSHEY_PLAIN
-    font_scale = 1.
+    font_scale = 1.5
     (text_width, text_height) = cv2.getTextSize(text, font, fontScale=font_scale, thickness=1)[0]
 
-    padding = 5
+    padding = 10
     rect_height = text_height + padding * 2
     rect_width = text_width + padding * 2
 
     (x, y) = coords
 
-    cv2.rectangle(image, (x, y), (x + rect_width, y - rect_height), color, cv2.FILLED)
+    offset = 15
+    correction = 25
+    if x - offset <= correction:
+        x = correction
+    if x + offset >= width - correction:
+        x = width - correction
+    if y - offset <= correction:
+        y = correction
+    if y + offset >= height - correction:
+        y = height - correction
+
+    cv2.rectangle(image, (x, y), (x + rect_width, y - rect_height), (0,0,0), cv2.FILLED)
     cv2.putText(image, text, (x + padding, y - text_height + padding), font,
                 fontScale=font_scale,
                 color=(255, 255, 255),
@@ -127,7 +139,7 @@ def draw_label(image, text, color, coords):
 
     return image
 
-def draw_boxes(image, boxes, classes, scores, class_names, colors, show_score=True):
+def draw_boxes(image, boxes, classes, scores, class_names, colors, show_score=True, activity_classes = [], actions = {}):
     if boxes is None or len(boxes) == 0:
         return image
     if classes is None or len(classes) == 0:
@@ -142,6 +154,9 @@ def draw_boxes(image, boxes, classes, scores, class_names, colors, show_score=Tr
         else:
             label = '{}'.format(class_name)
         #print(label, (xmin, ymin), (xmax, ymax))
+
+        if (cls in activity_classes):
+            label += actions[cls]
 
         # if no color info, use black(0,0,0)
         if colors == None:

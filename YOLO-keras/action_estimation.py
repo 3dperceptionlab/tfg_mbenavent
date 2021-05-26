@@ -5,6 +5,7 @@ Run a YOLOv3/YOLOv2 style detection model on test images.
 """
 
 import colorsys
+import math
 import os, sys, argparse
 import cv2
 import time
@@ -26,6 +27,7 @@ from yolo2.postprocess_np import yolo2_postprocess_np
 from common.data_utils import preprocess_image
 from common.utils import get_classes, get_anchors, get_colors, draw_boxes, optimize_tf_gpu
 from tensorflow.keras.utils import multi_gpu_model
+import pandas as pd
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
@@ -40,7 +42,7 @@ default_config = {
         "pruning_model": False,
         "anchors_path": os.path.join('configs', 'tiny_yolo3_anchors.txt'),
         "classes_path": os.path.join('configs', 'coco_classes.txt'),
-        "score" : 0.1,
+        "score" : 0.2,
         "iou" : 0.4,
         "model_image_size" : (416, 416),
         "elim_grid_sense": False,
@@ -70,6 +72,13 @@ class YOLO_np(object):
         K.set_learning_phase(0)
         self.yolo_model = self._generate_model(os.path.expanduser(self.weights_path), len(self.class_names))
         self.yolo_hand_model = self._generate_model(os.path.expanduser(self.weights_path_hands), len(self.hand_classes_names))
+        self.actions = {}
+        print('--------------------------------------------------------------')
+        print(self.actions_path)
+        print('--------------------------------------------------------------')
+        actions_file = pd.read_csv(self.actions_path, delimiter=';')
+        for index, action in actions_file.iterrows():
+            self.actions[int(action['noun_id'])] = action['verbs']
 
     def _generate_model(self, weights_path, num_classes):
         '''to generate the bounding boxes'''
@@ -123,20 +132,45 @@ class YOLO_np(object):
 
         start = time.time()
         out_boxes, out_classes, out_scores = self.predict(image_data, image_shape, self.model_type, self.yolo_model, self.class_names)
-        print('Found {} boxes for {}'.format(len(out_boxes), 'img'))
+        print('Found {} boxes for {}'.format(len(out_boxes), 'object'))
         end = time.time()
         print("Inference time: {:.8f}s".format(end - start))
 
         start = time.time()
         hand_out_boxes, hand_out_classes, hand_out_scores = self.predict(image_data, image_shape,self.model_type_hand, self.yolo_hand_model, self.hand_classes_names)
-        print('Found {} boxes for {}'.format(len(hand_out_boxes), 'img'))
+        print('Found {} boxes for {}'.format(len(hand_out_boxes), 'hand'))
         end = time.time()
         print("Inference time: {:.8f}s".format(end - start))
 
         #draw result on input image
+
+        if len(hand_out_boxes) == 0:
+            activity_classes = out_classes
+        else:
+            activity_classes = []
+            # Get closest object 
+            #class_name = class_names[cls]
+            for hand_bb in hand_out_boxes:
+                xmin, ymin, xmax, ymax = map(int, hand_bb)
+                hand_center = ((xmin+(xmax-xmin)/2),(ymin+(ymax-ymin)/2))
+                best_distance = -1
+                activity_classes_hand = None
+                for obj_bb, obj_class in zip(out_boxes,out_classes):
+                    xmin, ymin, xmax, ymax = map(int, obj_bb)
+                    obj_center = ((xmin+(xmax-xmin)/2),(ymin+(ymax-ymin)/2))
+                    distance = math.sqrt((hand_center[0]-obj_center[0])**2+(hand_center[1]-obj_center[1])**2)
+                    if best_distance == -1 or distance < best_distance:
+                        best_distance = distance
+                        activity_classes_hand = obj_class
+
+                if activity_classes_hand != None:
+                    activity_classes.append(activity_classes_hand)
+            if len(activity_classes)==0:
+                activity_classes = out_classes
         image_array = np.array(image, dtype='uint8')
-        image_array = draw_boxes(image_array, out_boxes, out_classes, out_scores, self.class_names, self.colors)
+        image_array = draw_boxes(image_array, out_boxes, out_classes, out_scores, self.class_names, self.colors, activity_classes=activity_classes, actions=self.actions)
         image_array = draw_boxes(image_array, hand_out_boxes, hand_out_classes, hand_out_scores, self.hand_classes_names, self.hand_colors)
+
 
         out_classnames = [self.class_names[c] for c in out_classes]
         return Image.fromarray(image_array), out_boxes, out_classnames, out_scores
@@ -287,6 +321,7 @@ def detect_video(yolo, video_path, output_path=""):
     while True:
         ret, frame = vid.read()
         if ret != True:
+            print("me piro")
             break
 
         image = Image.fromarray(frame)
@@ -303,17 +338,17 @@ def detect_video(yolo, video_path, output_path=""):
             curr_fps = 0
         cv2.putText(result, text=fps, org=(3, 15), fontFace=cv2.FONT_HERSHEY_SIMPLEX,
                     fontScale=0.50, color=(255, 0, 0), thickness=2)
-        cv2.namedWindow("result", cv2.WINDOW_NORMAL)
-        cv2.imshow("result", result)
+        #cv2.namedWindow("result", cv2.WINDOW_NORMAL)
+        #cv2.imshow("result", result)
         if isOutput:
             out.write(result)
-        if cv2.waitKey(1) & 0xFF == ord('q'):
-            break
+        #if cv2.waitKey(1) & 0xFF == ord('q'):
+            # break
     # Release everything if job is finished
     vid.release()
     if isOutput:
         out.release()
-    cv2.destroyAllWindows()
+    #cv2.destroyAllWindows()
 
 
 def detect_img(yolo):
