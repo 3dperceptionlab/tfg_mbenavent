@@ -7,6 +7,5 @@ python action_estimation.py \
 --classes_path_hands /workspace/tfg_mbenavent/EGO-DAILY/egodaily_class_1hand.txt \
 --actions_path /workspace/tfg_mbenavent/EPIC-KITCHENS/processed-labels/actions_per_noun.csv \
 --anchors_path configs/yolo3_anchors.txt \
---input=/datasets/EPIC-KITCHENS/P01/videos/P01_01.MP4 \
---output=result.mp4
-
+--input=/datasets/EPIC-KITCHENS/P01/videos/P01_03.MP4 \
+--output=P01_03.MP4

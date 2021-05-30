@@ -318,12 +318,16 @@ def detect_video(yolo, video_path, output_path=""):
     curr_fps = 0
     fps = "FPS: ??"
     prev_time = timer()
+    len_frames = int(vid.get(cv2.CAP_PROP_FRAME_COUNT))
+    current_len = 0
     while True:
-        ret, frame = vid.read()
-        if ret != True:
-            print("me piro")
+        is_cap, frame = vid.read()
+        if frame is None:
+            continue
+        current_len += 1
+        print("FRAME COUNT: " + str(current_len) + "/" + str(len_frames))
+        if len_frames == current_len:
             break
-
         image = Image.fromarray(frame)
         image, _, _, _ = yolo.detect_image(image)
         result = np.asarray(image)
@@ -342,6 +346,7 @@ def detect_video(yolo, video_path, output_path=""):
         #cv2.imshow("result", result)
         if isOutput:
             out.write(result)
+        cv2.waitKey(20)
         #if cv2.waitKey(1) & 0xFF == ord('q'):
             # break
     # Release everything if job is finished
