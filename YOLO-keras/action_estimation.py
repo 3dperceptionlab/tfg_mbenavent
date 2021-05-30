@@ -70,8 +70,8 @@ class YOLO_np(object):
         self.colors = get_colors(self.class_names)
         self.hand_colors = get_colors(self.hand_classes_names)
         K.set_learning_phase(0)
-        self.yolo_model = self._generate_model(os.path.expanduser(self.weights_path), len(self.class_names))
-        self.yolo_hand_model = self._generate_model(os.path.expanduser(self.weights_path_hands), len(self.hand_classes_names))
+        self.yolo_model = self._generate_model(os.path.expanduser(self.weights_path), len(self.class_names), self.model_type)
+        self.yolo_hand_model = self._generate_model(os.path.expanduser(self.weights_path_hands), len(self.hand_classes_names), self.model_type_hand)
         self.actions = {}
         print('--------------------------------------------------------------')
         print(self.actions_path)
@@ -80,7 +80,7 @@ class YOLO_np(object):
         for index, action in actions_file.iterrows():
             self.actions[int(action['noun_id'])] = action['verbs']
 
-    def _generate_model(self, weights_path, num_classes):
+    def _generate_model(self, weights_path, num_classes, model_type):
         '''to generate the bounding boxes'''
         assert weights_path.endswith('.h5'), 'Keras model or weights must be a .h5 file.'
 
@@ -92,16 +92,16 @@ class YOLO_np(object):
         num_feature_layers = num_anchors//3
 
         try:
-            if self.model_type.startswith('scaled_yolo4_') or self.model_type.startswith('yolo5_'):
+            if model_type.startswith('scaled_yolo4_') or model_type.startswith('yolo5_'):
                 # Scaled-YOLOv4 & YOLOv5 entrance
-                yolo_model, _ = get_yolo5_model(self.model_type, num_feature_layers, num_anchors, num_classes, input_shape=self.model_image_size + (3,), model_pruning=self.pruning_model)
-            elif self.model_type.startswith('yolo3_') or self.model_type.startswith('yolo4_') or \
-                 self.model_type.startswith('tiny_yolo3_') or self.model_type.startswith('tiny_yolo4_'):
+                yolo_model, _ = get_yolo5_model(model_type, num_feature_layers, num_anchors, num_classes, input_shape=self.model_image_size + (3,), model_pruning=self.pruning_model)
+            elif model_type.startswith('yolo3_') or model_type.startswith('yolo4_') or \
+                 model_type.startswith('tiny_yolo3_') or model_type.startswith('tiny_yolo4_'):
                 # YOLOv3 & v4 entrance
-                yolo_model, _ = get_yolo3_model(self.model_type, num_feature_layers, num_anchors, num_classes, input_shape=self.model_image_size + (3,), model_pruning=self.pruning_model)
-            elif self.model_type.startswith('yolo2_') or self.model_type.startswith('tiny_yolo2_'):
+                yolo_model, _ = get_yolo3_model(model_type, num_feature_layers, num_anchors, num_classes, input_shape=self.model_image_size + (3,), model_pruning=self.pruning_model)
+            elif model_type.startswith('yolo2_') or model_type.startswith('tiny_yolo2_'):
                 # YOLOv2 entrance
-                yolo_model, _ = get_yolo2_model(self.model_type, num_anchors, num_classes, input_shape=self.model_image_size + (3,), model_pruning=self.pruning_model)
+                yolo_model, _ = get_yolo2_model(model_type, num_anchors, num_classes, input_shape=self.model_image_size + (3,), model_pruning=self.pruning_model)
             else:
                 raise ValueError('Unsupported model type')
 

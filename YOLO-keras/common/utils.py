@@ -111,7 +111,7 @@ def get_dataset(annotation_file, shuffle=True):
 def draw_label(image, text, color, coords):
     height, width, channels = image.shape
     font = cv2.FONT_HERSHEY_PLAIN
-    font_scale = 1.5
+    font_scale = 2
     (text_width, text_height) = cv2.getTextSize(text, font, fontScale=font_scale, thickness=1)[0]
 
     padding = 10
