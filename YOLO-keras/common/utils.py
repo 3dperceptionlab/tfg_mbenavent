@@ -111,10 +111,11 @@ def get_dataset(annotation_file, shuffle=True):
 def draw_label(image, text, color, coords):
     height, width, channels = image.shape
     font = cv2.FONT_HERSHEY_PLAIN
-    font_scale = 2
-    (text_width, text_height) = cv2.getTextSize(text, font, fontScale=font_scale, thickness=1)[0]
+    font_scale = 4.5
+    thickness = 6
+    (text_width, text_height) = cv2.getTextSize(text, font, fontScale=font_scale, thickness=thickness)[0]
 
-    padding = 10
+    padding = 15
     rect_height = text_height + padding * 2
     rect_width = text_width + padding * 2
 
@@ -131,11 +132,12 @@ def draw_label(image, text, color, coords):
     if y + offset >= height - correction:
         y = height - correction
 
-    cv2.rectangle(image, (x, y), (x + rect_width, y - rect_height), (0,0,0), cv2.FILLED)
+    cv2.rectangle(image, (x, y), (x + rect_width, y - rect_height), color, cv2.FILLED)
     cv2.putText(image, text, (x + padding, y - text_height + padding), font,
                 fontScale=font_scale,
                 color=(255, 255, 255),
-                lineType=cv2.LINE_AA)
+                lineType=cv2.LINE_AA,
+                thickness=thickness)
 
     return image
 
@@ -163,7 +165,7 @@ def draw_boxes(image, boxes, classes, scores, class_names, colors, show_score=Tr
             color = (0,0,0)
         else:
             color = colors[cls]
-        cv2.rectangle(image, (xmin, ymin), (xmax, ymax), color, 1, cv2.LINE_AA)
+        cv2.rectangle(image, (xmin, ymin), (xmax, ymax), color, 3, cv2.LINE_AA)
         image = draw_label(image, label, color, (xmin, ymin))
 
     return image
