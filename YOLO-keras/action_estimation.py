@@ -28,6 +28,7 @@ from common.data_utils import preprocess_image
 from common.utils import get_classes, get_anchors, get_colors, draw_boxes, optimize_tf_gpu
 from tensorflow.keras.utils import multi_gpu_model
 import pandas as pd
+import ast
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
@@ -78,7 +79,7 @@ class YOLO_np(object):
         print('--------------------------------------------------------------')
         actions_file = pd.read_csv(self.actions_path, delimiter=';')
         for index, action in actions_file.iterrows():
-            self.actions[int(action['noun_id'])] = action['verbs']
+            self.actions[int(action['noun_id'])] = ast.literal_eval(action['verbs'])
 
     def _generate_model(self, weights_path, num_classes, model_type):
         '''to generate the bounding boxes'''
@@ -149,28 +150,59 @@ class YOLO_np(object):
         else:
             activity_classes = []
             # Get closest object 
-            #class_name = class_names[cls]
             for hand_bb in hand_out_boxes:
                 xmin, ymin, xmax, ymax = map(int, hand_bb)
                 hand_center = ((xmin+(xmax-xmin)/2),(ymin+(ymax-ymin)/2))
+                # Distance between hand_center a top-right corner
+                #extra_area = math.sqrt((hand_center[0]-xmin)**2+(hand_center[1]-ymin)**2)
+                extra_area = 0
                 best_distance = -1
-                activity_classes_hand = None
+                distances = []
                 for obj_bb, obj_class in zip(out_boxes,out_classes):
                     xmin, ymin, xmax, ymax = map(int, obj_bb)
                     obj_center = ((xmin+(xmax-xmin)/2),(ymin+(ymax-ymin)/2))
                     distance = math.sqrt((hand_center[0]-obj_center[0])**2+(hand_center[1]-obj_center[1])**2)
+                    distances.append(distance)
                     if best_distance == -1 or distance < best_distance:
                         best_distance = distance
-                        activity_classes_hand = obj_class
 
-                if activity_classes_hand != None:
-                    activity_classes.append(activity_classes_hand)
+                if best_distance != -1:
+                    for distance, obj_class in zip(distances, out_classes):
+                        if distance <= best_distance + extra_area:
+                            activity_classes.append(obj_class)
+
+
             if len(activity_classes)==0:
                 activity_classes = out_classes
         image_array = np.array(image, dtype='uint8')
-        image_array = draw_boxes(image_array, out_boxes, out_classes, out_scores, self.class_names, self.colors, activity_classes=activity_classes, actions=self.actions)
         image_array = draw_boxes(image_array, hand_out_boxes, hand_out_classes, hand_out_scores, self.hand_classes_names, self.hand_colors)
+        image_array = draw_boxes(image_array, out_boxes, out_classes, out_scores, self.class_names, self.colors, activity_classes=activity_classes, actions=self.actions)
+        
+        final_actions = set()
+        for obj in activity_classes:
+            for verb in self.actions[obj]:
+                if verb not in final_actions:
+                    final_actions.add(verb)
 
+
+        # Print most likely actions
+        text = str(final_actions)
+        font = cv2.FONT_HERSHEY_PLAIN
+        font_scale = 4.5
+        thickness = 6
+        (text_width, text_height) = cv2.getTextSize(text, font, fontScale=font_scale, thickness=thickness)[0]
+        padding = 15
+        rect_height = text_height + padding * 3
+        height = image_array.shape[0]
+        # Create area for text
+        image_array = cv2.copyMakeBorder(image_array, 0, rect_height, 0, 0, cv2.BORDER_CONSTANT, None, [0, 0, 0])
+
+        # Print actions
+        cv2.putText(image_array, text, (0 + padding, height + text_height + padding*2), font,
+                fontScale=font_scale,
+                color=(255, 255, 255),
+                lineType=cv2.LINE_AA,
+                thickness=thickness)
 
         out_classnames = [self.class_names[c] for c in out_classes]
         return Image.fromarray(image_array), out_boxes, out_classnames, out_scores
@@ -366,8 +398,7 @@ def detect_img(yolo):
             continue
         else:
             r_image, _, _, _ = yolo.detect_image(image)
-            r_image.show()
-            r_image.save('test.jpg')
+            r_image.save('pipeline_result.png')
 
 
 def main():

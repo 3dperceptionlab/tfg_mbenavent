@@ -186,10 +186,10 @@ def main(args):
             use_multiprocessing=False,
             max_queue_size=10,
             callbacks=callbacks)
-
+    model.save(os.path.join(log_dir, 'fine_tuning_final.h5'))
     # Wait 2 seconds for next stage
     time.sleep(2)
-    args.batch_size = args.batch_size//4
+    args.batch_size = 4
     if args.decay_type:
         # rebuild optimizer to apply learning rate decay, only after
         # unfreeze all layers

@@ -1,0 +1,85 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    
+      <meta charset="utf-8">
+      <title>P-R curve for heart</title>
+      
+      
+        
+          
+        
+        
+          
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js" integrity="sha384-HjagQp6T0/7bxYTAXbLotF1MLAGWmhkY5siA1Gc/pcEgvgRPtMsRn0gQtMwGKiw1" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+        
+      
+      
+    
+  </head>
+  
+  
+  <body>
+    
+      
+        
+          
+          
+            
+              <div class="bk-root" id="c80b8d27-5b95-4abd-b71b-ac49381ec42b" data-root-id="25279"></div>
+            
+          
+        
+      
+      
+        <script type="application/json" id="25396">
+          {"2d5a755c-8fbf-41f7-90fa-b5329c4888f2":{"defs":[{"extends":null,"module":null,"name":"DataModel","overrides":[],"properties":[]}],"roots":{"references":[{"attributes":{},"id":"25311","type":"AllLabels"},{"attributes":{"line_alpha":0.1,"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"25301","type":"Line"},{"attributes":{"data_source":{"id":"25278"},"glyph":{"id":"25300"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"25301"},"view":{"id":"25303"}},"id":"25302","type":"GlyphRenderer"},{"attributes":{},"id":"25286","type":"LinearScale"},{"attributes":{"callback":null,"formatters":{"prec":"printf","rec":"printf"},"mode":"vline","tooltips":[["score","@score{0.0000 a}"],["Prec","@prec"],["Recall","@rec"]]},"id":"25304","type":"HoverTool"},{"attributes":{"axis_label":"Recall","axis_line_color":null,"formatter":{"id":"25307"},"major_label_policy":{"id":"25308"},"ticker":{"id":"25291"}},"id":"25290","type":"LinearAxis"},{"attributes":{"text":"class: heart AP = 7.6923076923076925%"},"id":"25280","type":"Title"},{"attributes":{"axis":{"id":"25290"},"grid_line_color":"white","ticker":null},"id":"25293","type":"Grid"},{"attributes":{},"id":"25310","type":"BasicTickFormatter"},{"attributes":{"axis_label":"Precision","axis_line_color":null,"formatter":{"id":"25310"},"major_label_policy":{"id":"25311"},"ticker":{"id":"25295"}},"id":"25294","type":"LinearAxis"},{"attributes":{"source":{"id":"25278"}},"id":"25303","type":"CDSView"},{"attributes":{"axis":{"id":"25294"},"dimension":1,"grid_line_color":"white","ticker":null},"id":"25297","type":"Grid"},{"attributes":{"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"25300","type":"Line"},{"attributes":{},"id":"25307","type":"BasicTickFormatter"},{"attributes":{},"id":"25313","type":"UnionRenderers"},{"attributes":{"active_multi":null,"tools":[{"id":"25304"}]},"id":"25298","type":"Toolbar"},{"attributes":{},"id":"25288","type":"LinearScale"},{"attributes":{},"id":"25282","type":"DataRange1d"},{"attributes":{"data":{"prec":[0.5,0.5,0.5,0.5,0.5,0.4,0.3333333333333333,0.2857142857142857,0.25,0.0,0.0],"rec":[0.0,0.0,0.07692307692307693,0.07692307692307693,0.15384615384615385,0.15384615384615385,0.15384615384615385,0.15384615384615385,0.15384615384615385,0.15384615384615385,1.0],"score":[0.0,0.06171825139594134,0.03100627025788949,0.025953439028910452,0.007386192136114578,0.00614233499999195,0.004153491982342994,0.0018552250049957975,0.0,0.0012786434009702807,1.0]},"selected":{"id":"25314"},"selection_policy":{"id":"25313"}},"id":"25278","type":"ColumnDataSource"},{"attributes":{},"id":"25314","type":"Selection"},{"attributes":{"background_fill_color":"#f5f5f5","below":[{"id":"25290"}],"center":[{"id":"25293"},{"id":"25297"}],"height":200,"left":[{"id":"25294"}],"renderers":[{"id":"25302"}],"sizing_mode":"scale_width","title":{"id":"25280"},"toolbar":{"id":"25298"},"toolbar_location":null,"width":200,"x_range":{"id":"25282"},"x_scale":{"id":"25286"},"y_range":{"id":"25284"},"y_scale":{"id":"25288"}},"id":"25279","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"25295","type":"BasicTicker"},{"attributes":{},"id":"25291","type":"BasicTicker"},{"attributes":{},"id":"25308","type":"AllLabels"},{"attributes":{},"id":"25284","type":"DataRange1d"}],"root_ids":["25279"]},"title":"Bokeh Application","version":"2.3.0"}}
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('25396').textContent;
+                  var render_items = [{"docid":"2d5a755c-8fbf-41f7-90fa-b5329c4888f2","root_ids":["25279"],"roots":{"25279":"c80b8d27-5b95-4abd-b71b-ac49381ec42b"}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        clearInterval(timer);
+                        embed_document(root);
+                      } else {
+                        attempts++;
+                        if (attempts > 100) {
+                          clearInterval(timer);
+                          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                        }
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    
+  </body>
+  
+</html>

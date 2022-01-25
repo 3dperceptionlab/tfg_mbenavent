@@ -132,8 +132,13 @@ def draw_label(image, text, color, coords):
     if y + offset >= height - correction:
         y = height - correction
 
+    if y - rect_height < 0:
+        y+=abs(y - rect_height)
+    if y + rect_height > height:
+        y-= (y + rect_height - height)
+
     cv2.rectangle(image, (x, y), (x + rect_width, y - rect_height), color, cv2.FILLED)
-    cv2.putText(image, text, (x + padding, y - text_height + padding), font,
+    cv2.putText(image, text, (x + padding, y - text_height + padding*2), font,
                 fontScale=font_scale,
                 color=(255, 255, 255),
                 lineType=cv2.LINE_AA,
@@ -158,7 +163,7 @@ def draw_boxes(image, boxes, classes, scores, class_names, colors, show_score=Tr
         #print(label, (xmin, ymin), (xmax, ymax))
 
         if (cls in activity_classes):
-            label += actions[cls]
+            label += str(actions[cls])
 
         # if no color info, use black(0,0,0)
         if colors == None:

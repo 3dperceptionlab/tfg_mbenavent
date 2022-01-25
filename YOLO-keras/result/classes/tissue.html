@@ -1,0 +1,85 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    
+      <meta charset="utf-8">
+      <title>P-R curve for tissue</title>
+      
+      
+        
+          
+        
+        
+          
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js" integrity="sha384-HjagQp6T0/7bxYTAXbLotF1MLAGWmhkY5siA1Gc/pcEgvgRPtMsRn0gQtMwGKiw1" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+        
+      
+      
+    
+  </head>
+  
+  
+  <body>
+    
+      
+        
+          
+          
+            
+              <div class="bk-root" id="d9e7ddd2-a00d-4427-9b5c-488bfbe547e3" data-root-id="18853"></div>
+            
+          
+        
+      
+      
+        <script type="application/json" id="18970">
+          {"2e616d15-108e-4fcc-8aaf-5e33a1cc2ab4":{"defs":[{"extends":null,"module":null,"name":"DataModel","overrides":[],"properties":[]}],"roots":{"references":[{"attributes":{},"id":"18862","type":"LinearScale"},{"attributes":{},"id":"18884","type":"BasicTickFormatter"},{"attributes":{"axis_label":"Precision","axis_line_color":null,"formatter":{"id":"18884"},"major_label_policy":{"id":"18885"},"ticker":{"id":"18869"}},"id":"18868","type":"LinearAxis"},{"attributes":{},"id":"18856","type":"DataRange1d"},{"attributes":{"axis":{"id":"18868"},"dimension":1,"grid_line_color":"white","ticker":null},"id":"18871","type":"Grid"},{"attributes":{},"id":"18885","type":"AllLabels"},{"attributes":{"active_multi":null,"tools":[{"id":"18878"}]},"id":"18872","type":"Toolbar"},{"attributes":{"line_alpha":0.1,"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"18875","type":"Line"},{"attributes":{"background_fill_color":"#f5f5f5","below":[{"id":"18864"}],"center":[{"id":"18867"},{"id":"18871"}],"height":200,"left":[{"id":"18868"}],"renderers":[{"id":"18876"}],"sizing_mode":"scale_width","title":{"id":"18854"},"toolbar":{"id":"18872"},"toolbar_location":null,"width":200,"x_range":{"id":"18856"},"x_scale":{"id":"18860"},"y_range":{"id":"18858"},"y_scale":{"id":"18862"}},"id":"18853","subtype":"Figure","type":"Plot"},{"attributes":{"axis":{"id":"18864"},"grid_line_color":"white","ticker":null},"id":"18867","type":"Grid"},{"attributes":{},"id":"18858","type":"DataRange1d"},{"attributes":{},"id":"18888","type":"Selection"},{"attributes":{"callback":null,"formatters":{"prec":"printf","rec":"printf"},"mode":"vline","tooltips":[["score","@score{0.0000 a}"],["Prec","@prec"],["Recall","@rec"]]},"id":"18878","type":"HoverTool"},{"attributes":{},"id":"18887","type":"UnionRenderers"},{"attributes":{},"id":"18860","type":"LinearScale"},{"attributes":{},"id":"18881","type":"BasicTickFormatter"},{"attributes":{"source":{"id":"18852"}},"id":"18877","type":"CDSView"},{"attributes":{},"id":"18882","type":"AllLabels"},{"attributes":{},"id":"18869","type":"BasicTicker"},{"attributes":{"data_source":{"id":"18852"},"glyph":{"id":"18874"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"18875"},"view":{"id":"18877"}},"id":"18876","type":"GlyphRenderer"},{"attributes":{"axis_label":"Recall","axis_line_color":null,"formatter":{"id":"18881"},"major_label_policy":{"id":"18882"},"ticker":{"id":"18865"}},"id":"18864","type":"LinearAxis"},{"attributes":{"data":{"prec":[1.0,1.0,0.5,0.3333333333333333,0.25,0.2,0.16666666666666666,0.14285714285714285,0.125,0.0,0.0],"rec":[0.0,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,0.1,1.0],"score":[0.0,0.21571853573006727,0.041938953565024306,0.03580023814719202,0.005488421422752465,0.003574770967524621,0.00248426620864374,0.002002352421975828,0.0,0.0015685412743050575,1.0]},"selected":{"id":"18888"},"selection_policy":{"id":"18887"}},"id":"18852","type":"ColumnDataSource"},{"attributes":{},"id":"18865","type":"BasicTicker"},{"attributes":{"text":"class: tissue AP = 10.0%"},"id":"18854","type":"Title"},{"attributes":{"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"18874","type":"Line"}],"root_ids":["18853"]},"title":"Bokeh Application","version":"2.3.0"}}
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('18970').textContent;
+                  var render_items = [{"docid":"2e616d15-108e-4fcc-8aaf-5e33a1cc2ab4","root_ids":["18853"],"roots":{"18853":"d9e7ddd2-a00d-4427-9b5c-488bfbe547e3"}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        clearInterval(timer);
+                        embed_document(root);
+                      } else {
+                        attempts++;
+                        if (attempts > 100) {
+                          clearInterval(timer);
+                          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                        }
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    
+  </body>
+  
+</html>

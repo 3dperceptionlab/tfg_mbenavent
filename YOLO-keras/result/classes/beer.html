@@ -1,0 +1,85 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    
+      <meta charset="utf-8">
+      <title>P-R curve for beer</title>
+      
+      
+        
+          
+        
+        
+          
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js" integrity="sha384-HjagQp6T0/7bxYTAXbLotF1MLAGWmhkY5siA1Gc/pcEgvgRPtMsRn0gQtMwGKiw1" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+        
+      
+      
+    
+  </head>
+  
+  
+  <body>
+    
+      
+        
+          
+          
+            
+              <div class="bk-root" id="16750b1e-c28a-45d6-952f-6fca58e4ef3b" data-root-id="29087"></div>
+            
+          
+        
+      
+      
+        <script type="application/json" id="29204">
+          {"795d4102-794c-4f1e-98e2-3c87c1ec452a":{"defs":[{"extends":null,"module":null,"name":"DataModel","overrides":[],"properties":[]}],"roots":{"references":[{"attributes":{},"id":"29094","type":"LinearScale"},{"attributes":{"callback":null,"formatters":{"prec":"printf","rec":"printf"},"mode":"vline","tooltips":[["score","@score{0.0000 a}"],["Prec","@prec"],["Recall","@rec"]]},"id":"29112","type":"HoverTool"},{"attributes":{},"id":"29115","type":"BasicTickFormatter"},{"attributes":{},"id":"29090","type":"DataRange1d"},{"attributes":{},"id":"29099","type":"BasicTicker"},{"attributes":{"axis":{"id":"29102"},"dimension":1,"grid_line_color":"white","ticker":null},"id":"29105","type":"Grid"},{"attributes":{"line_alpha":0.1,"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"29109","type":"Line"},{"attributes":{"axis_label":"Recall","axis_line_color":null,"formatter":{"id":"29115"},"major_label_policy":{"id":"29116"},"ticker":{"id":"29099"}},"id":"29098","type":"LinearAxis"},{"attributes":{},"id":"29092","type":"DataRange1d"},{"attributes":{"axis":{"id":"29098"},"grid_line_color":"white","ticker":null},"id":"29101","type":"Grid"},{"attributes":{},"id":"29121","type":"UnionRenderers"},{"attributes":{},"id":"29119","type":"AllLabels"},{"attributes":{"data":{"prec":[1.0,1.0,1.0,1.0,1.0,1.0,0.8333333333333334,0.7142857142857143,0.6666666666666666,0.6666666666666666,0.6363636363636364,0.6363636363636364,0.6,0.6,0.6,0.6,0.5625,0.5294117647058824,0.5,0.47368421052631576,0.45,0.0,0.0],"rec":[0.0,0.05555555555555555,0.1111111111111111,0.16666666666666666,0.2222222222222222,0.2777777777777778,0.2777777777777778,0.2777777777777778,0.2777777777777778,0.3333333333333333,0.3333333333333333,0.3888888888888889,0.3888888888888889,0.3888888888888889,0.4444444444444444,0.5,0.5,0.5,0.5,0.5,0.5,0.5,1.0],"score":[0.0,0.6753750306668991,0.6107440291406121,0.39062911666997024,0.3340432913864575,0.28537979368342725,0.15627379446988954,0.1378358148258627,0.10909702861294335,0.08005800895475135,0.015704046490954582,0.010333082808664074,0.008704711657806286,0.006727324004840746,0.004784685077602213,0.004634520441402223,0.002064840470667448,0.0019514115423775041,0.0015057803234159173,0.001284966543563984,0.0,0.0011047008067245484,1.0]},"selected":{"id":"29122"},"selection_policy":{"id":"29121"}},"id":"29086","type":"ColumnDataSource"},{"attributes":{"source":{"id":"29086"}},"id":"29111","type":"CDSView"},{"attributes":{"data_source":{"id":"29086"},"glyph":{"id":"29108"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"29109"},"view":{"id":"29111"}},"id":"29110","type":"GlyphRenderer"},{"attributes":{},"id":"29103","type":"BasicTicker"},{"attributes":{},"id":"29116","type":"AllLabels"},{"attributes":{},"id":"29122","type":"Selection"},{"attributes":{},"id":"29096","type":"LinearScale"},{"attributes":{"axis_label":"Precision","axis_line_color":null,"formatter":{"id":"29118"},"major_label_policy":{"id":"29119"},"ticker":{"id":"29103"}},"id":"29102","type":"LinearAxis"},{"attributes":{"active_multi":null,"tools":[{"id":"29112"}]},"id":"29106","type":"Toolbar"},{"attributes":{"text":"class: beer AP = 41.68350168350168%"},"id":"29088","type":"Title"},{"attributes":{"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"29108","type":"Line"},{"attributes":{"background_fill_color":"#f5f5f5","below":[{"id":"29098"}],"center":[{"id":"29101"},{"id":"29105"}],"height":200,"left":[{"id":"29102"}],"renderers":[{"id":"29110"}],"sizing_mode":"scale_width","title":{"id":"29088"},"toolbar":{"id":"29106"},"toolbar_location":null,"width":200,"x_range":{"id":"29090"},"x_scale":{"id":"29094"},"y_range":{"id":"29092"},"y_scale":{"id":"29096"}},"id":"29087","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"29118","type":"BasicTickFormatter"}],"root_ids":["29087"]},"title":"Bokeh Application","version":"2.3.0"}}
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('29204').textContent;
+                  var render_items = [{"docid":"795d4102-794c-4f1e-98e2-3c87c1ec452a","root_ids":["29087"],"roots":{"29087":"16750b1e-c28a-45d6-952f-6fca58e4ef3b"}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        clearInterval(timer);
+                        embed_document(root);
+                      } else {
+                        attempts++;
+                        if (attempts > 100) {
+                          clearInterval(timer);
+                          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                        }
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    
+  </body>
+  
+</html>

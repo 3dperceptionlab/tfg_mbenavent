@@ -1,0 +1,85 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    
+      <meta charset="utf-8">
+      <title>P-R curve for herb</title>
+      
+      
+        
+          
+        
+        
+          
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js" integrity="sha384-HjagQp6T0/7bxYTAXbLotF1MLAGWmhkY5siA1Gc/pcEgvgRPtMsRn0gQtMwGKiw1" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+        
+      
+      
+    
+  </head>
+  
+  
+  <body>
+    
+      
+        
+          
+          
+            
+              <div class="bk-root" id="892dacf5-9414-40dd-8559-93f02fdae804" data-root-id="27659"></div>
+            
+          
+        
+      
+      
+        <script type="application/json" id="27776">
+          {"b7a0bb14-e6a8-45b0-a191-e6e6d89cd96f":{"defs":[{"extends":null,"module":null,"name":"DataModel","overrides":[],"properties":[]}],"roots":{"references":[{"attributes":{"data":{"prec":[0.875,0.875,0.875,0.875,0.875,0.875,0.875,0.875,0.875,0.8,0.8,0.7692307692307693,0.7692307692307693,0.7692307692307693,0.0,0.0],"rec":[0.0,0.0,0.0625,0.125,0.1875,0.25,0.3125,0.375,0.4375,0.4375,0.5,0.5,0.5625,0.625,0.625,1.0],"score":[0.0,0.17329845573436486,0.17143453900276384,0.1456247012480123,0.11160500626353542,0.08656047943825662,0.05644082235200276,0.05373847534691789,0.05351288345610783,0.04194055180493095,0.038499566432485866,0.012570660998588279,0.005436424712255694,0.0,0.005384372377476021,1.0]},"selected":{"id":"27694"},"selection_policy":{"id":"27693"}},"id":"27658","type":"ColumnDataSource"},{"attributes":{},"id":"27691","type":"AllLabels"},{"attributes":{"source":{"id":"27658"}},"id":"27683","type":"CDSView"},{"attributes":{"line_alpha":0.1,"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"27681","type":"Line"},{"attributes":{"active_multi":null,"tools":[{"id":"27684"}]},"id":"27678","type":"Toolbar"},{"attributes":{},"id":"27664","type":"DataRange1d"},{"attributes":{},"id":"27694","type":"Selection"},{"attributes":{},"id":"27675","type":"BasicTicker"},{"attributes":{"axis_label":"Precision","axis_line_color":null,"formatter":{"id":"27690"},"major_label_policy":{"id":"27691"},"ticker":{"id":"27675"}},"id":"27674","type":"LinearAxis"},{"attributes":{},"id":"27668","type":"LinearScale"},{"attributes":{},"id":"27662","type":"DataRange1d"},{"attributes":{"axis":{"id":"27670"},"grid_line_color":"white","ticker":null},"id":"27673","type":"Grid"},{"attributes":{"background_fill_color":"#f5f5f5","below":[{"id":"27670"}],"center":[{"id":"27673"},{"id":"27677"}],"height":200,"left":[{"id":"27674"}],"renderers":[{"id":"27682"}],"sizing_mode":"scale_width","title":{"id":"27660"},"toolbar":{"id":"27678"},"toolbar_location":null,"width":200,"x_range":{"id":"27662"},"x_scale":{"id":"27666"},"y_range":{"id":"27664"},"y_scale":{"id":"27668"}},"id":"27659","subtype":"Figure","type":"Plot"},{"attributes":{"axis":{"id":"27674"},"dimension":1,"grid_line_color":"white","ticker":null},"id":"27677","type":"Grid"},{"attributes":{},"id":"27687","type":"BasicTickFormatter"},{"attributes":{"callback":null,"formatters":{"prec":"printf","rec":"printf"},"mode":"vline","tooltips":[["score","@score{0.0000 a}"],["Prec","@prec"],["Recall","@rec"]]},"id":"27684","type":"HoverTool"},{"attributes":{},"id":"27688","type":"AllLabels"},{"attributes":{},"id":"27671","type":"BasicTicker"},{"attributes":{},"id":"27690","type":"BasicTickFormatter"},{"attributes":{"data_source":{"id":"27658"},"glyph":{"id":"27680"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"27681"},"view":{"id":"27683"}},"id":"27682","type":"GlyphRenderer"},{"attributes":{},"id":"27693","type":"UnionRenderers"},{"attributes":{"text":"class: herb AP = 52.89663461538462%"},"id":"27660","type":"Title"},{"attributes":{},"id":"27666","type":"LinearScale"},{"attributes":{"axis_label":"Recall","axis_line_color":null,"formatter":{"id":"27687"},"major_label_policy":{"id":"27688"},"ticker":{"id":"27671"}},"id":"27670","type":"LinearAxis"},{"attributes":{"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"27680","type":"Line"}],"root_ids":["27659"]},"title":"Bokeh Application","version":"2.3.0"}}
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('27776').textContent;
+                  var render_items = [{"docid":"b7a0bb14-e6a8-45b0-a191-e6e6d89cd96f","root_ids":["27659"],"roots":{"27659":"892dacf5-9414-40dd-8559-93f02fdae804"}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        clearInterval(timer);
+                        embed_document(root);
+                      } else {
+                        attempts++;
+                        if (attempts > 100) {
+                          clearInterval(timer);
+                          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                        }
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    
+  </body>
+  
+</html>

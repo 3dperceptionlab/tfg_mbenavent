@@ -1,0 +1,85 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    
+      <meta charset="utf-8">
+      <title>P-R curve for syrup</title>
+      
+      
+        
+          
+        
+        
+          
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js" integrity="sha384-HjagQp6T0/7bxYTAXbLotF1MLAGWmhkY5siA1Gc/pcEgvgRPtMsRn0gQtMwGKiw1" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+        
+      
+      
+    
+  </head>
+  
+  
+  <body>
+    
+      
+        
+          
+          
+            
+              <div class="bk-root" id="c1a889aa-373e-4f04-bb23-0553cc328a00" data-root-id="28849"></div>
+            
+          
+        
+      
+      
+        <script type="application/json" id="28966">
+          {"65a0b8a1-8e5d-4245-abea-645f2b7d9abc":{"defs":[{"extends":null,"module":null,"name":"DataModel","overrides":[],"properties":[]}],"roots":{"references":[{"attributes":{"data_source":{"id":"28848"},"glyph":{"id":"28870"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"28871"},"view":{"id":"28873"}},"id":"28872","type":"GlyphRenderer"},{"attributes":{},"id":"28861","type":"BasicTicker"},{"attributes":{"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"28870","type":"Line"},{"attributes":{},"id":"28878","type":"AllLabels"},{"attributes":{"axis_label":"Precision","axis_line_color":null,"formatter":{"id":"28880"},"major_label_policy":{"id":"28881"},"ticker":{"id":"28865"}},"id":"28864","type":"LinearAxis"},{"attributes":{"callback":null,"formatters":{"prec":"printf","rec":"printf"},"mode":"vline","tooltips":[["score","@score{0.0000 a}"],["Prec","@prec"],["Recall","@rec"]]},"id":"28874","type":"HoverTool"},{"attributes":{"line_alpha":0.1,"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"28871","type":"Line"},{"attributes":{},"id":"28865","type":"BasicTicker"},{"attributes":{"background_fill_color":"#f5f5f5","below":[{"id":"28860"}],"center":[{"id":"28863"},{"id":"28867"}],"height":200,"left":[{"id":"28864"}],"renderers":[{"id":"28872"}],"sizing_mode":"scale_width","title":{"id":"28850"},"toolbar":{"id":"28868"},"toolbar_location":null,"width":200,"x_range":{"id":"28852"},"x_scale":{"id":"28856"},"y_range":{"id":"28854"},"y_scale":{"id":"28858"}},"id":"28849","subtype":"Figure","type":"Plot"},{"attributes":{"axis":{"id":"28860"},"grid_line_color":"white","ticker":null},"id":"28863","type":"Grid"},{"attributes":{},"id":"28854","type":"DataRange1d"},{"attributes":{"axis_label":"Recall","axis_line_color":null,"formatter":{"id":"28877"},"major_label_policy":{"id":"28878"},"ticker":{"id":"28861"}},"id":"28860","type":"LinearAxis"},{"attributes":{},"id":"28856","type":"LinearScale"},{"attributes":{},"id":"28877","type":"BasicTickFormatter"},{"attributes":{},"id":"28858","type":"LinearScale"},{"attributes":{},"id":"28881","type":"AllLabels"},{"attributes":{"text":"class: syrup AP = 21.794871794871796%"},"id":"28850","type":"Title"},{"attributes":{},"id":"28884","type":"Selection"},{"attributes":{},"id":"28852","type":"DataRange1d"},{"attributes":{},"id":"28880","type":"BasicTickFormatter"},{"attributes":{"axis":{"id":"28864"},"dimension":1,"grid_line_color":"white","ticker":null},"id":"28867","type":"Grid"},{"attributes":{"source":{"id":"28848"}},"id":"28873","type":"CDSView"},{"attributes":{},"id":"28883","type":"UnionRenderers"},{"attributes":{"active_multi":null,"tools":[{"id":"28874"}]},"id":"28868","type":"Toolbar"},{"attributes":{"data":{"prec":[0.6666666666666666,0.6666666666666666,0.6666666666666666,0.6666666666666666,0.6666666666666666,0.6666666666666666,0.6666666666666666,0.5714285714285714,0.5,0.4444444444444444,0.4,0.38461538461538464,0.38461538461538464,0.38461538461538464,0.35714285714285715,0.3333333333333333,0.3125,0.0,0.0],"rec":[0.0,0.0,0.0,0.07142857142857142,0.14285714285714285,0.21428571428571427,0.2857142857142857,0.2857142857142857,0.2857142857142857,0.2857142857142857,0.2857142857142857,0.2857142857142857,0.2857142857142857,0.35714285714285715,0.35714285714285715,0.35714285714285715,0.35714285714285715,0.35714285714285715,1.0],"score":[0.0,0.7886264921661486,0.4569968817290526,0.434986927161809,0.3925745264461611,0.2993395817717026,0.22379271008426294,0.13254372825004967,0.070385472960798,0.05379471333491015,0.038587594492927035,0.00970378383841447,0.009269587899563003,0.0043779452126700424,0.002307692160093411,0.0021533563555539287,0.0,0.001119727317340613,1.0]},"selected":{"id":"28884"},"selection_policy":{"id":"28883"}},"id":"28848","type":"ColumnDataSource"}],"root_ids":["28849"]},"title":"Bokeh Application","version":"2.3.0"}}
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('28966').textContent;
+                  var render_items = [{"docid":"65a0b8a1-8e5d-4245-abea-645f2b7d9abc","root_ids":["28849"],"roots":{"28849":"c1a889aa-373e-4f04-bb23-0553cc328a00"}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        clearInterval(timer);
+                        embed_document(root);
+                      } else {
+                        attempts++;
+                        if (attempts > 100) {
+                          clearInterval(timer);
+                          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                        }
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    
+  </body>
+  
+</html>

@@ -1,0 +1,85 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    
+      <meta charset="utf-8">
+      <title>P-R curve for smoothie</title>
+      
+      
+        
+          
+        
+        
+          
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js" integrity="sha384-HjagQp6T0/7bxYTAXbLotF1MLAGWmhkY5siA1Gc/pcEgvgRPtMsRn0gQtMwGKiw1" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+        
+      
+      
+    
+  </head>
+  
+  
+  <body>
+    
+      
+        
+          
+          
+            
+              <div class="bk-root" id="3b1a151a-c65c-4c81-a9fc-9b2aedc342db" data-root-id="30396"></div>
+            
+          
+        
+      
+      
+        <script type="application/json" id="30513">
+          {"1f2c0c7d-63e0-44c1-bd23-dbfc1a20afb3":{"defs":[{"extends":null,"module":null,"name":"DataModel","overrides":[],"properties":[]}],"roots":{"references":[{"attributes":{},"id":"30401","type":"DataRange1d"},{"attributes":{},"id":"30427","type":"BasicTickFormatter"},{"attributes":{},"id":"30405","type":"LinearScale"},{"attributes":{"data_source":{"id":"30395"},"glyph":{"id":"30417"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"30418"},"view":{"id":"30420"}},"id":"30419","type":"GlyphRenderer"},{"attributes":{},"id":"30430","type":"UnionRenderers"},{"attributes":{"source":{"id":"30395"}},"id":"30420","type":"CDSView"},{"attributes":{"axis":{"id":"30407"},"grid_line_color":"white","ticker":null},"id":"30410","type":"Grid"},{"attributes":{"callback":null,"formatters":{"prec":"printf","rec":"printf"},"mode":"vline","tooltips":[["score","@score{0.0000 a}"],["Prec","@prec"],["Recall","@rec"]]},"id":"30421","type":"HoverTool"},{"attributes":{"axis_label":"Precision","axis_line_color":null,"formatter":{"id":"30427"},"major_label_policy":{"id":"30428"},"ticker":{"id":"30412"}},"id":"30411","type":"LinearAxis"},{"attributes":{"text":"class: smoothie AP = 0.0%"},"id":"30397","type":"Title"},{"attributes":{"background_fill_color":"#f5f5f5","below":[{"id":"30407"}],"center":[{"id":"30410"},{"id":"30414"}],"height":200,"left":[{"id":"30411"}],"renderers":[{"id":"30419"}],"sizing_mode":"scale_width","title":{"id":"30397"},"toolbar":{"id":"30415"},"toolbar_location":null,"width":200,"x_range":{"id":"30399"},"x_scale":{"id":"30403"},"y_range":{"id":"30401"},"y_scale":{"id":"30405"}},"id":"30396","subtype":"Figure","type":"Plot"},{"attributes":{"active_multi":null,"tools":[{"id":"30421"}]},"id":"30415","type":"Toolbar"},{"attributes":{},"id":"30425","type":"AllLabels"},{"attributes":{},"id":"30399","type":"DataRange1d"},{"attributes":{},"id":"30403","type":"LinearScale"},{"attributes":{},"id":"30428","type":"AllLabels"},{"attributes":{"axis":{"id":"30411"},"dimension":1,"grid_line_color":"white","ticker":null},"id":"30414","type":"Grid"},{"attributes":{"axis_label":"Recall","axis_line_color":null,"formatter":{"id":"30424"},"major_label_policy":{"id":"30425"},"ticker":{"id":"30408"}},"id":"30407","type":"LinearAxis"},{"attributes":{},"id":"30431","type":"Selection"},{"attributes":{},"id":"30424","type":"BasicTickFormatter"},{"attributes":{},"id":"30408","type":"BasicTicker"},{"attributes":{"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"30417","type":"Line"},{"attributes":{"data":{"prec":[0.0,0.0,0.0,0.0,0.0],"rec":[0.0,0.0,0.0,0.0,1.0],"score":[0.0,0.056466977213767144,0.0,0.037969021123782865,1.0]},"selected":{"id":"30431"},"selection_policy":{"id":"30430"}},"id":"30395","type":"ColumnDataSource"},{"attributes":{},"id":"30412","type":"BasicTicker"},{"attributes":{"line_alpha":0.1,"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"30418","type":"Line"}],"root_ids":["30396"]},"title":"Bokeh Application","version":"2.3.0"}}
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('30513').textContent;
+                  var render_items = [{"docid":"1f2c0c7d-63e0-44c1-bd23-dbfc1a20afb3","root_ids":["30396"],"roots":{"30396":"3b1a151a-c65c-4c81-a9fc-9b2aedc342db"}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        clearInterval(timer);
+                        embed_document(root);
+                      } else {
+                        attempts++;
+                        if (attempts > 100) {
+                          clearInterval(timer);
+                          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                        }
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    
+  </body>
+  
+</html>

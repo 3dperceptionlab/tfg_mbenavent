@@ -957,6 +957,24 @@ def get_mean_metric(metric_records, gt_classes_records):
     mean_metric = (mean_metric/count)*100 if count != 0 else 0.0
     return mean_metric
 
+def calc_percentile(AP, precision, recall):
+    percentile_file = open(os.path.join('result','percentile_result.txt'), 'w')
+    values=np.array(list(AP.values()))
+    percentile_file.write("AP:\n")
+    percentile_file.write(str(np.percentile(values,25)) + '\n')
+    percentile_file.write(str(np.percentile(values,50)) + '\n')
+    percentile_file.write(str(np.percentile(values,75)) + '\n')
+    values=np.array(list(precision.values()))
+    percentile_file.write("Precision:\n")
+    percentile_file.write(str(np.percentile(values,25)) + '\n')
+    percentile_file.write(str(np.percentile(values,50)) + '\n')
+    percentile_file.write(str(np.percentile(values,75)) + '\n')
+    values=np.array(list(recall.values()))
+    percentile_file.write("Recall:\n")
+    percentile_file.write(str(np.percentile(values,25)) + '\n')
+    percentile_file.write(str(np.percentile(values,50)) + '\n')
+    percentile_file.write(str(np.percentile(values,75)) + '\n')
+    percentile_file.close()
 
 def compute_mAP_PascalVOC(annotation_records, gt_classes_records, pred_classes_records, class_names, iou_threshold, show_result=True):
     '''
@@ -1018,7 +1036,7 @@ def compute_mAP_PascalVOC(annotation_records, gt_classes_records, pred_classes_r
     mPrec = get_mean_metric(precision_dict, gt_classes_records)
     mRec = get_mean_metric(recall_dict, gt_classes_records)
 
-
+    calc_percentile(APs, precision_dict, recall_dict)
     if show_result:
         plot_Pascal_AP_result(len(annotation_records), count_true_positives, len(gt_classes_records),
                                   gt_counter_per_class, pred_counter_per_class,

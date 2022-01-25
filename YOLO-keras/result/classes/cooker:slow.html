@@ -1,0 +1,85 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    
+      <meta charset="utf-8">
+      <title>P-R curve for cooker:slow</title>
+      
+      
+        
+          
+        
+        
+          
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js" integrity="sha384-HjagQp6T0/7bxYTAXbLotF1MLAGWmhkY5siA1Gc/pcEgvgRPtMsRn0gQtMwGKiw1" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+        
+      
+      
+    
+  </head>
+  
+  
+  <body>
+    
+      
+        
+          
+          
+            
+              <div class="bk-root" id="a059d0fb-4969-4626-835b-2258b5e0daa9" data-root-id="24922"></div>
+            
+          
+        
+      
+      
+        <script type="application/json" id="25039">
+          {"ce0f4e04-efd2-4a00-a643-9f9d6f84f7c3":{"defs":[{"extends":null,"module":null,"name":"DataModel","overrides":[],"properties":[]}],"roots":{"references":[{"attributes":{},"id":"24938","type":"BasicTicker"},{"attributes":{},"id":"24950","type":"BasicTickFormatter"},{"attributes":{"background_fill_color":"#f5f5f5","below":[{"id":"24933"}],"center":[{"id":"24936"},{"id":"24940"}],"height":200,"left":[{"id":"24937"}],"renderers":[{"id":"24945"}],"sizing_mode":"scale_width","title":{"id":"24923"},"toolbar":{"id":"24941"},"toolbar_location":null,"width":200,"x_range":{"id":"24925"},"x_scale":{"id":"24929"},"y_range":{"id":"24927"},"y_scale":{"id":"24931"}},"id":"24922","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"24927","type":"DataRange1d"},{"attributes":{"active_multi":null,"tools":[{"id":"24947"}]},"id":"24941","type":"Toolbar"},{"attributes":{"source":{"id":"24921"}},"id":"24946","type":"CDSView"},{"attributes":{"data":{"prec":[0.5,0.5,0.5,0.5,0.5,0.5,0.5,0.42857142857142855,0.375,0.3333333333333333,0.3,0.2727272727272727,0.25,0.23076923076923078,0.0,0.0],"rec":[0.0,0.0,0.0,0.07142857142857142,0.07142857142857142,0.14285714285714285,0.21428571428571427,0.21428571428571427,0.21428571428571427,0.21428571428571427,0.21428571428571427,0.21428571428571427,0.21428571428571427,0.21428571428571427,0.21428571428571427,1.0],"score":[0.0,0.8283979250917817,0.6397140637955729,0.5574391605326525,0.33290608784376374,0.29113978625517234,0.1285687181802473,0.12532268973824934,0.060461343844719906,0.006052212013533342,0.0023737751389153045,0.002275730683756083,0.0020256561618902935,0.0,0.0015827255009774888,1.0]},"selected":{"id":"24957"},"selection_policy":{"id":"24956"}},"id":"24921","type":"ColumnDataSource"},{"attributes":{"callback":null,"formatters":{"prec":"printf","rec":"printf"},"mode":"vline","tooltips":[["score","@score{0.0000 a}"],["Prec","@prec"],["Recall","@rec"]]},"id":"24947","type":"HoverTool"},{"attributes":{},"id":"24934","type":"BasicTicker"},{"attributes":{"line_alpha":0.1,"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"24944","type":"Line"},{"attributes":{},"id":"24954","type":"AllLabels"},{"attributes":{},"id":"24956","type":"UnionRenderers"},{"attributes":{},"id":"24931","type":"LinearScale"},{"attributes":{"text":"class: cooker:slow AP = 10.714285714285714%"},"id":"24923","type":"Title"},{"attributes":{},"id":"24929","type":"LinearScale"},{"attributes":{"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"24943","type":"Line"},{"attributes":{"axis":{"id":"24937"},"dimension":1,"grid_line_color":"white","ticker":null},"id":"24940","type":"Grid"},{"attributes":{"axis_label":"Recall","axis_line_color":null,"formatter":{"id":"24950"},"major_label_policy":{"id":"24951"},"ticker":{"id":"24934"}},"id":"24933","type":"LinearAxis"},{"attributes":{},"id":"24957","type":"Selection"},{"attributes":{"axis_label":"Precision","axis_line_color":null,"formatter":{"id":"24953"},"major_label_policy":{"id":"24954"},"ticker":{"id":"24938"}},"id":"24937","type":"LinearAxis"},{"attributes":{},"id":"24925","type":"DataRange1d"},{"attributes":{},"id":"24953","type":"BasicTickFormatter"},{"attributes":{"axis":{"id":"24933"},"grid_line_color":"white","ticker":null},"id":"24936","type":"Grid"},{"attributes":{"data_source":{"id":"24921"},"glyph":{"id":"24943"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"24944"},"view":{"id":"24946"}},"id":"24945","type":"GlyphRenderer"},{"attributes":{},"id":"24951","type":"AllLabels"}],"root_ids":["24922"]},"title":"Bokeh Application","version":"2.3.0"}}
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('25039').textContent;
+                  var render_items = [{"docid":"ce0f4e04-efd2-4a00-a643-9f9d6f84f7c3","root_ids":["24922"],"roots":{"24922":"a059d0fb-4969-4626-835b-2258b5e0daa9"}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        clearInterval(timer);
+                        embed_document(root);
+                      } else {
+                        attempts++;
+                        if (attempts > 100) {
+                          clearInterval(timer);
+                          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                        }
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    
+  </body>
+  
+</html>

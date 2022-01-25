@@ -1,0 +1,85 @@
+
+
+
+
+<!DOCTYPE html>
+<html lang="en">
+  
+  <head>
+    
+      <meta charset="utf-8">
+      <title>P-R curve for finger</title>
+      
+      
+        
+          
+        
+        
+          
+        <script type="text/javascript" src="https://cdn.bokeh.org/bokeh/release/bokeh-2.3.0.min.js" integrity="sha384-HjagQp6T0/7bxYTAXbLotF1MLAGWmhkY5siA1Gc/pcEgvgRPtMsRn0gQtMwGKiw1" crossorigin="anonymous"></script>
+        <script type="text/javascript">
+            Bokeh.set_log_level("info");
+        </script>
+        
+      
+      
+    
+  </head>
+  
+  
+  <body>
+    
+      
+        
+          
+          
+            
+              <div class="bk-root" id="afaae40b-7e2c-4939-8c29-b6064e37933d" data-root-id="27302"></div>
+            
+          
+        
+      
+      
+        <script type="application/json" id="27419">
+          {"f45771d1-f858-4330-9290-48ccb5500a3e":{"defs":[{"extends":null,"module":null,"name":"DataModel","overrides":[],"properties":[]}],"roots":{"references":[{"attributes":{},"id":"27318","type":"BasicTicker"},{"attributes":{},"id":"27334","type":"AllLabels"},{"attributes":{"axis_label":"Precision","axis_line_color":null,"formatter":{"id":"27333"},"major_label_policy":{"id":"27334"},"ticker":{"id":"27318"}},"id":"27317","type":"LinearAxis"},{"attributes":{},"id":"27307","type":"DataRange1d"},{"attributes":{},"id":"27311","type":"LinearScale"},{"attributes":{"data_source":{"id":"27301"},"glyph":{"id":"27323"},"hover_glyph":null,"muted_glyph":null,"nonselection_glyph":{"id":"27324"},"view":{"id":"27326"}},"id":"27325","type":"GlyphRenderer"},{"attributes":{"axis":{"id":"27313"},"grid_line_color":"white","ticker":null},"id":"27316","type":"Grid"},{"attributes":{},"id":"27309","type":"LinearScale"},{"attributes":{"callback":null,"formatters":{"prec":"printf","rec":"printf"},"mode":"vline","tooltips":[["score","@score{0.0000 a}"],["Prec","@prec"],["Recall","@rec"]]},"id":"27327","type":"HoverTool"},{"attributes":{"axis":{"id":"27317"},"dimension":1,"grid_line_color":"white","ticker":null},"id":"27320","type":"Grid"},{"attributes":{"text":"class: finger AP = 4.166666666666666%"},"id":"27303","type":"Title"},{"attributes":{"active_multi":null,"tools":[{"id":"27327"}]},"id":"27321","type":"Toolbar"},{"attributes":{"line_alpha":0.1,"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"27324","type":"Line"},{"attributes":{},"id":"27333","type":"BasicTickFormatter"},{"attributes":{"axis_label":"Recall","axis_line_color":null,"formatter":{"id":"27330"},"major_label_policy":{"id":"27331"},"ticker":{"id":"27314"}},"id":"27313","type":"LinearAxis"},{"attributes":{"data":{"prec":[0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.25,0.23529411764705882,0.2222222222222222,0.21052631578947367,0.2,0.19047619047619047,0.18181818181818182,0.0,0.0],"rec":[0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.0,0.041666666666666664,0.08333333333333333,0.08333333333333333,0.08333333333333333,0.08333333333333333,0.125,0.125,0.125,0.16666666666666666,0.16666666666666666,0.16666666666666666,0.16666666666666666,0.16666666666666666,0.16666666666666666,0.16666666666666666,0.16666666666666666,1.0],"score":[0.0,0.16802804554195028,0.04981876421831055,0.04262254709513491,0.03807271852273253,0.019530271071678262,0.019097943547174978,0.018619955107834096,0.015205864152872728,0.011961941233998297,0.009171886916082839,0.007614146330041205,0.006631652273326821,0.005292011697217325,0.0028738730598259765,0.002683681289537443,0.0017263341323333348,0.0015479735894388114,0.001468682944480576,0.0012576939540197146,0.0011621022353671961,0.0010627220351921152,0.0,0.0010227787137052358,1.0]},"selected":{"id":"27337"},"selection_policy":{"id":"27336"}},"id":"27301","type":"ColumnDataSource"},{"attributes":{"background_fill_color":"#f5f5f5","below":[{"id":"27313"}],"center":[{"id":"27316"},{"id":"27320"}],"height":200,"left":[{"id":"27317"}],"renderers":[{"id":"27325"}],"sizing_mode":"scale_width","title":{"id":"27303"},"toolbar":{"id":"27321"},"toolbar_location":null,"width":200,"x_range":{"id":"27305"},"x_scale":{"id":"27309"},"y_range":{"id":"27307"},"y_scale":{"id":"27311"}},"id":"27302","subtype":"Figure","type":"Plot"},{"attributes":{},"id":"27330","type":"BasicTickFormatter"},{"attributes":{"line_color":"#ebbd5b","line_width":2,"x":{"field":"rec"},"y":{"field":"prec"}},"id":"27323","type":"Line"},{"attributes":{},"id":"27331","type":"AllLabels"},{"attributes":{"source":{"id":"27301"}},"id":"27326","type":"CDSView"},{"attributes":{},"id":"27314","type":"BasicTicker"},{"attributes":{},"id":"27305","type":"DataRange1d"},{"attributes":{},"id":"27336","type":"UnionRenderers"},{"attributes":{},"id":"27337","type":"Selection"}],"root_ids":["27302"]},"title":"Bokeh Application","version":"2.3.0"}}
+        </script>
+        <script type="text/javascript">
+          (function() {
+            var fn = function() {
+              Bokeh.safely(function() {
+                (function(root) {
+                  function embed_document(root) {
+                    
+                  var docs_json = document.getElementById('27419').textContent;
+                  var render_items = [{"docid":"f45771d1-f858-4330-9290-48ccb5500a3e","root_ids":["27302"],"roots":{"27302":"afaae40b-7e2c-4939-8c29-b6064e37933d"}}];
+                  root.Bokeh.embed.embed_items(docs_json, render_items);
+                
+                  }
+                  if (root.Bokeh !== undefined) {
+                    embed_document(root);
+                  } else {
+                    var attempts = 0;
+                    var timer = setInterval(function(root) {
+                      if (root.Bokeh !== undefined) {
+                        clearInterval(timer);
+                        embed_document(root);
+                      } else {
+                        attempts++;
+                        if (attempts > 100) {
+                          clearInterval(timer);
+                          console.log("Bokeh: ERROR: Unable to run BokehJS code because BokehJS library is missing");
+                        }
+                      }
+                    }, 10, root)
+                  }
+                })(window);
+              });
+            };
+            if (document.readyState != "loading") fn();
+            else document.addEventListener("DOMContentLoaded", fn);
+          })();
+        </script>
+    
+  </body>
+  
+</html>

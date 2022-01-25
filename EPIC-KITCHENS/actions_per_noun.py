@@ -2,7 +2,7 @@ import pandas as pd
 
 nouns = {}
 counter = 0
-with open('processed-labels/epic-kitchens_classes.txt') as f:
+with open('processed-labels/epic-kitchens_classes_full.txt') as f:
     lines = f.readlines()
     for line in lines:
         nouns[line.strip('\n')] = counter
@@ -26,7 +26,7 @@ for index, action in actions.iterrows():
         nouns_dict[noun_id] = action['noun']
 
 
-with open('processed-labels/actions_per_noun.csv', 'w') as file:
+with open('processed-labels/actions_per_noun-full.csv', 'w') as file:
     file.write('noun_id;noun;verbs\n')
     for key, value in action_dict.items():
         file.write(f'{key};{nouns_dict[key]};{value}\n')
