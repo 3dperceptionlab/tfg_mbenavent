@@ -154,7 +154,6 @@ def draw_boxes(image, boxes, classes, scores, class_names, colors, show_score=Tr
 
     for box, cls, score in zip(boxes, classes, scores):
         xmin, ymin, xmax, ymax = map(int, box)
-
         class_name = class_names[cls]
         if show_score:
             label = '{} {:.2f}'.format(class_name, score)

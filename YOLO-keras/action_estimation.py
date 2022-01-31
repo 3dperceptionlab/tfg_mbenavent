@@ -144,6 +144,7 @@ class YOLO_np(object):
         print("Inference time: {:.8f}s".format(end - start))
 
         #draw result on input image
+        image_array = np.array(image, dtype='uint8')
 
         if len(hand_out_boxes) == 0:
             activity_classes = out_classes
@@ -154,8 +155,7 @@ class YOLO_np(object):
                 xmin, ymin, xmax, ymax = map(int, hand_bb)
                 hand_center = ((xmin+(xmax-xmin)/2),(ymin+(ymax-ymin)/2))
                 # Distance between hand_center a top-right corner
-                #extra_area = math.sqrt((hand_center[0]-xmin)**2+(hand_center[1]-ymin)**2)
-                extra_area = 0
+                extra_area = math.sqrt((hand_center[0]-xmin)**2+(hand_center[1]-ymin)**2)
                 best_distance = -1
                 distances = []
                 for obj_bb, obj_class in zip(out_boxes,out_classes):
@@ -167,6 +167,12 @@ class YOLO_np(object):
                         best_distance = distance
 
                 if best_distance != -1:
+                    # Uncomment to print observed surroundings
+                    # hand_center = (round(hand_center[0]),round(hand_center[1]))
+                    # overlay = image_array.copy()
+                    # cv2.circle(overlay, hand_center, round(best_distance + extra_area), (0, 0, 255), -1)
+                    # opacity = 0.2
+                    # cv2.addWeighted(overlay, opacity, image_array, 1 - opacity, 0, image_array)
                     for distance, obj_class in zip(distances, out_classes):
                         if distance <= best_distance + extra_area:
                             activity_classes.append(obj_class)
@@ -174,16 +180,17 @@ class YOLO_np(object):
 
             if len(activity_classes)==0:
                 activity_classes = out_classes
-        image_array = np.array(image, dtype='uint8')
         image_array = draw_boxes(image_array, hand_out_boxes, hand_out_classes, hand_out_scores, self.hand_classes_names, self.hand_colors)
         image_array = draw_boxes(image_array, out_boxes, out_classes, out_scores, self.class_names, self.colors, activity_classes=activity_classes, actions=self.actions)
         
-        final_actions = set()
+        actions = []
         for obj in activity_classes:
-            for verb in self.actions[obj]:
-                if verb not in final_actions:
-                    final_actions.add(verb)
-
+            actions.append(self.actions[obj])
+            
+        # Intersection of actions
+        final_actions = actions[0]
+        for act in actions[1:]:
+                final_actions = list(set(final_actions) & set(act))
 
         # Print most likely actions
         text = str(final_actions)
