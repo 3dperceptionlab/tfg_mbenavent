@@ -1,0 +1,1 @@
+/datasets/ADL/rgb_frames/P_01/053805.jpg 240,202,376,306,10

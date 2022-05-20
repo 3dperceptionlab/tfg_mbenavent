@@ -1,0 +1,8 @@
+
+Mean: 2931.4893617021276
+Median: 1795
+Annotated frames before downsampling: 137780
+Objects annotated: 110611
+47 classes
+(selected) 2500 min -> 20 classes
+2900 min -> 19 classes
