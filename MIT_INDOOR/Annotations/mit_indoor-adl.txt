@@ -2,31 +2,31 @@ combing hair;bathroom
 make up;bathroom
 brushing teeth;bathroom
 dental floss;bathroom
-washing hands/face;bathroom 
-drying hands/face;bathroom 
-enter/leave room;All 
+washing hands/face;bathroom
+drying hands/face;bathroom
+enter/leave room;All
 adjusting thermostat;bathroom
 laundry;kitchen
-washing dishes;kitchen 
-moving dishes;kitchen 
-making tea;kitchen 
-making coffee;kitchen 
-drinking water/bottle;dining room 
-drinking water/tap;kitchen 
-making hot food;kitchen 
-making cold food/snack;kitchen 
-eating food/snack;dining room 
-mopping in kitchen;kitchen 
-vacuuming;All 
-taking pills;dining room 
-watching tv;living room 
+washing dishes;kitchen
+moving dishes;kitchen
+making tea;kitchen
+making coffee;kitchen
+drinking water/bottle;dining room
+drinking water/tap;kitchen
+making hot food;kitchen
+making cold food/snack;kitchen
+eating food/snack;dining room
+mopping in kitchen;kitchen
+vacuuming;All
+taking pills;dining room
+watching tv;living room
 using computer;office 
-using cell;All 
-making bed;bedroom 
-cleaning house;All 
-reading book;living room 
-using mouth wash;bathroom 
+using cell;All
+making bed;bedroom
+cleaning house;All
+reading book;living room
+using mouth wash;bathroom
 writing;office 
-putting on shoes/sucks;bedroom 
-drinking coffee/tea;dining room 
+putting on shoes/sucks;bedroom
+drinking coffee/tea;dining room
 grabbing water from tap;kitchen
