@@ -1,0 +1,32 @@
+combing hair
+make up
+brushing teeth
+dental floss
+washing hands/face
+drying hands/face
+enter/leave room
+adjusting thermostat
+laundry
+washing dishes
+moving dishes
+making tea
+making coffee
+drinking water/bottle
+drinking water/tap
+making hot food
+making cold food/snack
+eating food/snack
+mopping in kitchen
+vacuuming
+taking pills
+watching tv
+using computer
+using cell
+making bed
+cleaning house
+reading book
+using_mouth_wash
+writing
+putting on shoes/sucks
+drinking coffee/tea
+grabbing water from tap

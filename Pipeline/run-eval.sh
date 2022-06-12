@@ -1,0 +1,10 @@
+#!/bin/bash
+python eval.py \
+    --model_path=trained_models/yolo4_adl.h5 \
+    --anchors_path=configs/yolo3_anchors.txt \
+    --classes_path=/workspace/tfg_mbenavent/ADL/ADL_YOLO_annotations/adl_classes.txt \
+    --model_image_size=416x416 \
+    --eval_type=VOC \
+    --iou_threshold=0.5 \
+    --conf_threshold=0.1 \
+    --annotation_file=/workspace/tfg_mbenavent/ADL/ADL_YOLO_annotations/test.txt

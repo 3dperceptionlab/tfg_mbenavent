@@ -1,0 +1,11 @@
+python action_estimation.py \
+--model_type yolo4_darknet \
+--model_type_hand yolo4_darknet \
+--weights_path /workspace/tfg_mbenavent/Pipeline/trained_models/yolo4_adl.h5 \
+--weights_path_hands /workspace/tfg_mbenavent/Pipeline/trained_models/yolo4_egodaily_2hands.h5 \
+--classes_path /workspace/tfg_mbenavent/ADL/ADL_YOLO_annotations/adl_classes.txt \
+--classes_path_hands /workspace/tfg_mbenavent/EGO-DAILY/egodaily_class_2hands.txt \
+--actions_path /workspace/tfg_mbenavent/ADL/ADL_YOLO_annotations/actions_per_noun.csv \
+--anchors_path configs/yolo3_anchors.txt \
+--scene_recognition_weights /workspace/tfg_mbenavent/MIT_INDOOR/weights_vgg16-mit_indoor.h5 \
+--image
