@@ -29,6 +29,9 @@ from common.utils import get_classes, get_anchors, get_colors, draw_boxes, optim
 from tensorflow.keras.utils import multi_gpu_model
 import pandas as pd
 import ast
+sys.path.insert(1, '../MIT_INDOOR')
+import VGG16_Pipeline
+
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
@@ -65,6 +68,7 @@ class YOLO_np(object):
         super(YOLO_np, self).__init__()
         self.__dict__.update(self._defaults) # set up default values
         self.__dict__.update(kwargs) # and update with user overrides
+
         self.class_names = get_classes(self.classes_path)
         self.hand_classes_names = get_classes(self.classes_path_hands)
         self.anchors = get_anchors(self.anchors_path)
@@ -80,6 +84,10 @@ class YOLO_np(object):
         actions_file = pd.read_csv(self.actions_path, delimiter=';')
         for index, action in actions_file.iterrows():
             self.actions[int(action['noun_id'])] = ast.literal_eval(action['verbs'])
+        if self.scene_recognition_weights is None:
+            self.scene_recognition = None
+        else:
+            self.scene_recognition = VGG16_Pipeline.VGG16_Pipeline(self.scene_recognition_weights)
 
     def _generate_model(self, weights_path, num_classes, model_type):
         '''to generate the bounding boxes'''
@@ -138,6 +146,15 @@ class YOLO_np(object):
         print("Inference time: {:.8f}s".format(end - start))
 
         start = time.time()
+        current_scene = None
+        actions_at_location = None
+        if self.scene_recognition is not None:
+            current_scene, actions_at_location = self.scene_recognition.predict(image)
+            print("Found location: " + current_scene)
+        print("Inference time: {:.8f}s".format(end - start))
+        end = time.time()
+
+        start = time.time()
         hand_out_boxes, hand_out_classes, hand_out_scores = self.predict(image_data, image_shape,self.model_type_hand, self.yolo_hand_model, self.hand_classes_names)
         print('Found {} boxes for {}'.format(len(hand_out_boxes), 'hand'))
         end = time.time()
@@ -188,17 +205,19 @@ class YOLO_np(object):
             actions.append(self.actions[obj])
             
         # Intersection of actions
-        final_actions = actions[0]
+        final_actions = actions[0] if len(actions)>0 else []
+        if actions_at_location is None:
+            actions_at_location = final_actions
         for act in actions[1:]:
-                final_actions = list(set(final_actions) & set(act))
+            final_actions = list(set(final_actions) & set(act) & set(actions_at_location))
 
         # Print most likely actions
-        text = str(final_actions)
+        text = ((current_scene + ':') if (current_scene is not None) else '') + str(final_actions)
         font = cv2.FONT_HERSHEY_PLAIN
-        font_scale = 4.5
-        thickness = 6
+        font_scale = 1.5 #4.5
+        thickness = 2 #3 #6
         (text_width, text_height) = cv2.getTextSize(text, font, fontScale=font_scale, thickness=thickness)[0]
-        padding = 15
+        padding = 7 # 15
         rect_height = text_height + padding * 3
         height = image_array.shape[0]
         # Create area for text
@@ -405,7 +424,7 @@ def detect_img(yolo):
             continue
         else:
             r_image, _, _, _ = yolo.detect_image(image)
-            r_image.save('pipeline_result.png')
+            r_image.save('sample_results/adl/' + img.replace('/','-'))
 
 
 def main():
@@ -502,6 +521,11 @@ def main():
     parser.add_argument(
         '--output_model_file', type=str,
         help='output inference model file'
+    )
+
+    parser.add_argument(
+        '--scene_recognition_weights', default=None,
+        help='path for scene recognition weights'
     )
 
     args = parser.parse_args()

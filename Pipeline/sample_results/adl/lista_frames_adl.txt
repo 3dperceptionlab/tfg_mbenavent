@@ -1,0 +1,16 @@
+Funciona ok:
+/datasets/ADL/rgb_frames/P_17/014475.jpg
+/datasets/ADL/rgb_frames/P_11/013737.jpg
+/datasets/ADL/rgb_frames/P_17/005544.jpg
+/datasets/ADL/rgb_frames/P_13/011700.jpg
+/datasets/ADL/rgb_frames/P_03/007980.jpg
+
+Funciona medio que:
+/datasets/ADL/rgb_frames/P_01/028392.jpg
+
+
+Con errores de localizacion:
+/datasets/ADL/rgb_frames/P_02/050550.jpg
+/datasets/ADL/rgb_frames/P_14/001992.jpg
+
+/datasets/ADL/rgb_frames/P_01/023112.jpg funciona bien pero localizar por posibles objetos la ubicacion seria mejor puesto que todo son objetos de baño

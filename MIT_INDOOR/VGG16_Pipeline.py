@@ -21,7 +21,7 @@ class VGG16_Pipeline:
         self.model.load_weights(weights_path)
 
     def load_actions(self):
-        df = pd.read_csv('Annotations/mit_indoor-adl.txt', header=None, sep=';')
+        df = pd.read_csv('/workspace/tfg_mbenavent/MIT_INDOOR/Annotations/mit_indoor-adl.txt', header=None, sep=';')
         locs_actions = {}
         for idx, row in df.iterrows():
             if row[1] == 'All':
@@ -33,7 +33,7 @@ class VGG16_Pipeline:
         return locs_actions
             
     def load_classes(self):
-        with open('Annotations/classes.txt') as f:
+        with open('/workspace/tfg_mbenavent/MIT_INDOOR/Annotations/classes.txt') as f:
             class_names = f.readlines()
             class_names = [c.strip() for c in class_names]
         return class_names
@@ -60,8 +60,8 @@ class VGG16_Pipeline:
         model.compile(optimizer='adam', loss='categorical_crossentropy',metrics=['accuracy'])
         return model
 
-    def predict(self, image_path):
-        image = Image.open(image_path)
+    def predict(self, image):
+        # image = Image.open(image_path)
         image = image.resize(input_shape[:2], Image.BICUBIC)
         image = np.array(image)
         # Some images do not fit the required format after resizing
@@ -71,7 +71,7 @@ class VGG16_Pipeline:
         image = image.astype(np.float32) / 255.0
         preds = self.model.predict(np.expand_dims(image,axis=0))
         loc = self.classes[np.argmax(preds)]
-        print('Location: ' + loc)
+        # print('Location: ' + loc)
         if loc not in self.actions:
             return loc, []
         else:

@@ -111,11 +111,11 @@ def get_dataset(annotation_file, shuffle=True):
 def draw_label(image, text, color, coords):
     height, width, channels = image.shape
     font = cv2.FONT_HERSHEY_PLAIN
-    font_scale = 4.5
-    thickness = 6
+    font_scale = 1.5#4.5
+    thickness = 2#6
     (text_width, text_height) = cv2.getTextSize(text, font, fontScale=font_scale, thickness=thickness)[0]
 
-    padding = 15
+    padding = 7 #15
     rect_height = text_height + padding * 2
     rect_width = text_width + padding * 2
 
@@ -169,6 +169,7 @@ def draw_boxes(image, boxes, classes, scores, class_names, colors, show_score=Tr
             color = (0,0,0)
         else:
             color = colors[cls]
+        # thickness = 1.5 # 3
         cv2.rectangle(image, (xmin, ymin), (xmax, ymax), color, 3, cv2.LINE_AA)
         image = draw_label(image, label, color, (xmin, ymin))
 

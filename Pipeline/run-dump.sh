@@ -6,4 +6,4 @@ python yolo.py \
     --classes_path=/workspace/tfg_mbenavent/ADL/ADL_YOLO_annotations/adl_classes.txt \
     --model_image_size=416x416 \
     --dump_model \
-    --output_model_file=/workspace/Resultados/yolo4_adl_2.h5
+    --output_model_file=trained_models/yolo4_adl_4jun.h5
