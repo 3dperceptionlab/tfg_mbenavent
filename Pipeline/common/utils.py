@@ -146,13 +146,13 @@ def draw_label(image, text, color, coords):
 
     return image
 
-def draw_boxes(image, boxes, classes, scores, class_names, colors, show_score=True, activity_classes = [], actions = {}):
+def draw_boxes(image, boxes, classes, scores, class_names, colors, show_score=True, indexes_of_interest = [], actions = {}):
     if boxes is None or len(boxes) == 0:
         return image
     if classes is None or len(classes) == 0:
         return image
 
-    for box, cls, score in zip(boxes, classes, scores):
+    for idx, (box, cls, score) in enumerate(zip(boxes, classes, scores)):
         xmin, ymin, xmax, ymax = map(int, box)
         class_name = class_names[cls]
         if show_score:
@@ -161,7 +161,7 @@ def draw_boxes(image, boxes, classes, scores, class_names, colors, show_score=Tr
             label = '{}'.format(class_name)
         #print(label, (xmin, ymin), (xmax, ymax))
 
-        if (cls in activity_classes):
+        if (idx in indexes_of_interest):
             label += str(actions[cls])
 
         # if no color info, use black(0,0,0)

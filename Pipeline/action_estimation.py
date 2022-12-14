@@ -31,7 +31,8 @@ import pandas as pd
 import ast
 sys.path.insert(1, '../MIT_INDOOR')
 import VGG16_Pipeline
-
+import hashlib
+import json
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
@@ -41,10 +42,11 @@ optimize_tf_gpu(tf, K)
 #tf.enable_eager_execution()
 
 default_config = {
-        "model_type": 'tiny_yolo3_darknet',
+        "model_type": 'yolo4_darknet',
+        "model_type_hand": 'yolo4_darknet',
         "weights_path": os.path.join('weights', 'yolov3-tiny.h5'),
         "pruning_model": False,
-        "anchors_path": os.path.join('configs', 'tiny_yolo3_anchors.txt'),
+        "anchors_path": os.path.join('configs', 'yolo3_anchors.txt'),
         "classes_path": os.path.join('configs', 'coco_classes.txt'),
         "score" : 0.2,
         "iou" : 0.4,
@@ -164,9 +166,9 @@ class YOLO_np(object):
         image_array = np.array(image, dtype='uint8')
 
         if len(hand_out_boxes) == 0:
-            activity_classes = out_classes
+            indexes_of_interest = [*range(len(out_boxes))] # All the objects IDs
         else:
-            activity_classes = []
+            indexes_of_interest = []
             # Get closest object 
             for hand_bb in hand_out_boxes:
                 xmin, ymin, xmax, ymax = map(int, hand_bb)
@@ -184,25 +186,30 @@ class YOLO_np(object):
                         best_distance = distance
 
                 if best_distance != -1:
-                    # Uncomment to print observed surroundings
+                    '''
+                    Uncomment to print observed surroundings
+                    '''
                     # hand_center = (round(hand_center[0]),round(hand_center[1]))
                     # overlay = image_array.copy()
                     # cv2.circle(overlay, hand_center, round(best_distance + extra_area), (0, 0, 255), -1)
                     # opacity = 0.2
                     # cv2.addWeighted(overlay, opacity, image_array, 1 - opacity, 0, image_array)
-                    for distance, obj_class in zip(distances, out_classes):
+                    for index, distance in enumerate(distances):
                         if distance <= best_distance + extra_area:
-                            activity_classes.append(obj_class)
+                            indexes_of_interest.append(index)
 
 
-            if len(activity_classes)==0:
-                activity_classes = out_classes
+            if len(indexes_of_interest)==0:
+                indexes_of_interest = [*range(len(out_boxes))]
         image_array = draw_boxes(image_array, hand_out_boxes, hand_out_classes, hand_out_scores, self.hand_classes_names, self.hand_colors)
-        image_array = draw_boxes(image_array, out_boxes, out_classes, out_scores, self.class_names, self.colors, activity_classes=activity_classes, actions=self.actions)
+        image_array = draw_boxes(image_array, out_boxes, out_classes, out_scores, self.class_names, self.colors, indexes_of_interest=indexes_of_interest, actions=self.actions)
         
+        # Obtain global action set
         actions = []
-        for obj in activity_classes:
-            actions.append(self.actions[obj])
+        classes_of_interest = list(map(lambda x: out_classes[x], indexes_of_interest))
+
+        for class_of_interest in classes_of_interest:
+            actions.append(self.actions[class_of_interest])
             
         # Intersection of actions
         final_actions = actions[0] if len(actions)>0 else []
@@ -231,7 +238,22 @@ class YOLO_np(object):
                 thickness=thickness)
 
         out_classnames = [self.class_names[c] for c in out_classes]
-        return Image.fromarray(image_array), out_boxes, out_classnames, out_scores
+
+        # Create json of most relevant objects
+        relevant_objects = []
+        for idx in indexes_of_interest:
+            obj = {}
+            obj['class'] = self.class_names[out_classes[idx]]
+            obj['actions'] = self.actions[out_classes[idx]]
+            xmin, ymin, xmax, ymax = map(int, out_boxes[idx])
+            obj['xmin'] = xmin
+            obj['ymin'] = ymin
+            obj['xmax'] = xmax
+            obj['ymax'] = ymax
+            relevant_objects.append(obj)
+
+
+        return Image.fromarray(image_array), out_boxes, out_classnames, out_scores, relevant_objects
 
 
     def predict(self, image_data, image_shape, model_type, yolo_model, class_names):
@@ -387,7 +409,7 @@ def detect_video(yolo, video_path, output_path=""):
         if len_frames == current_len:
             break
         image = Image.fromarray(frame)
-        image, _, _, _ = yolo.detect_image(image)
+        image, _, _, _, _ = yolo.detect_image(image)
         result = np.asarray(image)
         curr_time = timer()
         exec_time = curr_time - prev_time
@@ -423,9 +445,29 @@ def detect_img(yolo):
             print('Open Error! Try again!')
             continue
         else:
-            r_image, _, _, _ = yolo.detect_image(image)
+            r_image, _, _, _, _ = yolo.detect_image(image)
             r_image.save('sample_results/adl/' + img.replace('/','-'))
 
+
+def detect_holo(yolo, holo_path, img, holo_json):
+    checksum = ''
+    while True:
+        try:
+            image = Image.open(os.path.join(holo_path, img))
+        except:
+            print("Open Error! Sleeping for 0.5 seconds.")
+            import time; time.sleep(0.5)
+        else:
+            new_checksum = hashlib.md5(image.tobytes()).hexdigest()
+            if checksum==new_checksum:
+                print("Image not modified, sleeping for 0.5 seconds.")
+                import time; time.sleep(0.5)
+                continue
+            checksum = new_checksum
+            r_image, _, _, _, r_relevant_objects = yolo.detect_image(image)
+            r_image.save(os.path.join(holo_path, 'result.png'))
+            with open(os.path.join(holo_path, holo_json), 'w') as f:
+                f.write(json.dumps(r_relevant_objects, indent=4))
 
 def main():
     # class YOLO defines the default value, so suppress any default here
@@ -528,6 +570,18 @@ def main():
         help='path for scene recognition weights'
     )
 
+    parser.add_argument(
+        '--holo_path', nargs='?', type=str, required=False, default=None,
+        help='HOLO Lens detection mode. Specify path for input/output files.')
+
+    parser.add_argument(
+        '--holo_img', nargs='?', type=str, required=False, default='frame.png',
+        help='Image name in --holo_path.')
+
+    parser.add_argument(
+        '--holo_json', nargs='?', type=str, required=False, default='frame_result.json',
+        help='JSON file name in --holo_path.')
+
     args = parser.parse_args()
     # param parse
     if args.model_image_size:
@@ -557,6 +611,9 @@ def main():
         if "input" in args:
             print(" Ignoring remaining command line arguments: " + args.input + "," + args.output)
         detect_img(yolo)
+    elif args.holo_path:
+        print("HOLO Lens detection mode")
+        detect_holo(yolo, args.holo_path, args.holo_img, args.holo_json)
     elif "input" in args:
         detect_video(yolo, args.input, args.output)
     else:
