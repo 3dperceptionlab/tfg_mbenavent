@@ -12,4 +12,4 @@ docker run -d --gpus '"device=1"' --rm -it \
 	--net=host \
         --env="DISPLAY" \
 	--name $containerName \
-	mbenavent/david8862-yolokeras:latest bash
+	mbenavent/yolokeras:latest bash

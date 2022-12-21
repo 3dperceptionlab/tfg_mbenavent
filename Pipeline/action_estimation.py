@@ -29,6 +29,7 @@ from common.utils import get_classes, get_anchors, get_colors, draw_boxes, optim
 from tensorflow.keras.utils import multi_gpu_model
 import pandas as pd
 import ast
+from VideoStream import VideoStream
 sys.path.insert(1, '../MIT_INDOOR')
 import VGG16_Pipeline
 import hashlib
@@ -449,22 +450,34 @@ def detect_img(yolo):
             r_image.save('sample_results/adl/' + img.replace('/','-'))
 
 
-def detect_holo(yolo, holo_path, img, holo_json):
-    checksum = ''
+def detect_holo(yolo, holo_path, source, holo_json):
+    # if img_mode := ('png' or 'jpg' in source): # Python 3.8
+    if 'png' in source or 'jpg' in source:
+        img_mode = True
+        checksum = ''
+        print(f"Reading {source} in {holo_path}")
+    else:
+        img_mode = False
+        print(f"Obtaining video from {source}")
+        vStream = VideoStream(source).start()
     while True:
         try:
-            image = Image.open(os.path.join(holo_path, img))
+            if img_mode:
+                frame = Image.open(os.path.join(holo_path, source))
+                new_checksum = hashlib.md5(frame.tobytes()).hexdigest()
+                if checksum==new_checksum:
+                    print("Image not modified, sleeping for 0.5 seconds.")
+                    time.sleep(0.5)
+                    continue
+                checksum = new_checksum
+            else:
+                print("Obtaining frame...")
+                frame = Image.fromarray(vStream.read())
         except:
             print("Open Error! Sleeping for 0.5 seconds.")
-            import time; time.sleep(0.5)
+            time.sleep(0.5)
         else:
-            new_checksum = hashlib.md5(image.tobytes()).hexdigest()
-            if checksum==new_checksum:
-                print("Image not modified, sleeping for 0.5 seconds.")
-                import time; time.sleep(0.5)
-                continue
-            checksum = new_checksum
-            r_image, _, _, _, r_relevant_objects = yolo.detect_image(image)
+            r_image, _, _, _, r_relevant_objects = yolo.detect_image(frame)
             r_image.save(os.path.join(holo_path, 'result.png'))
             with open(os.path.join(holo_path, holo_json), 'w') as f:
                 f.write(json.dumps(r_relevant_objects, indent=4))
@@ -572,11 +585,11 @@ def main():
 
     parser.add_argument(
         '--holo_path', nargs='?', type=str, required=False, default=None,
-        help='HOLO Lens detection mode. Specify path for input/output files.')
+        help='HoloLens detection mode. Specify path for input/output files.')
 
     parser.add_argument(
-        '--holo_img', nargs='?', type=str, required=False, default='frame.png',
-        help='Image name in --holo_path.')
+        '--holo_source', nargs='?', type=str, required=False, default='frame.png',
+        help='Source for YOLO. Either image (png or jpg) name in --holo_path or URL.')
 
     parser.add_argument(
         '--holo_json', nargs='?', type=str, required=False, default='frame_result.json',
@@ -612,8 +625,8 @@ def main():
             print(" Ignoring remaining command line arguments: " + args.input + "," + args.output)
         detect_img(yolo)
     elif args.holo_path:
-        print("HOLO Lens detection mode")
-        detect_holo(yolo, args.holo_path, args.holo_img, args.holo_json)
+        print("HoloLens detection mode")
+        detect_holo(yolo, args.holo_path, args.holo_source, args.holo_json)
     elif "input" in args:
         detect_video(yolo, args.input, args.output)
     else:
