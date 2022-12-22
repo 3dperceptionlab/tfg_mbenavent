@@ -26,7 +26,10 @@ from yolo2.model import get_yolo2_model, get_yolo2_inference_model
 from yolo2.postprocess_np import yolo2_postprocess_np
 from common.data_utils import preprocess_image
 from common.utils import get_classes, get_anchors, get_colors, draw_boxes, optimize_tf_gpu
-from tensorflow.keras.utils import multi_gpu_model
+try:
+    from tensorflow.keras.utils import multi_gpu_model
+except ImportError:
+    from tensorflow.keras.utils.multi_gpu_utils import multi_gpu_model
 import pandas as pd
 import ast
 from VideoStream import VideoStream
