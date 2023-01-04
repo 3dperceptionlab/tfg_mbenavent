@@ -9,54 +9,69 @@ import os, sys, argparse
 import cv2
 import time
 from timeit import default_timer as timer
-from PIL import Image
+from PIL import Image, UnidentifiedImageError
 from action_estimation_lib.yolo import YOLO, YOLO_np
 from VideoStream import VideoStream
 import hashlib
 import json
 import base64
 from io import BytesIO
-from flask import Flask, request, jsonify, Response
+from flask import Flask, request, jsonify
 import queue
 import threading
+import numpy as np
 
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2'
 os.environ['CUDA_VISIBLE_DEVICES'] = '0'
-yolo_global = None
+
+processing_ids = set()
 holo_frame_queue = queue.Queue()
 holo_results = {}
 
 def worker(yolo):
     while True:
-        frame = holo_frame_queue.get()
+        id, frame = holo_frame_queue.get()
         r_image, _, _, _, r_relevant_objects = yolo.detect_image(frame)
         # holo_results[1] = json.dumps(r_relevant_objects, indent=4)
-        holo_results[1] = 'klasjdhf'
-        # r_image.save("tmp.png")
+        holo_results[id] = r_relevant_objects
+        print(r_relevant_objects)
+        processing_ids.remove(id)
+        r_image.save("tmp.png")
         holo_frame_queue.task_done()
 
 
 app = Flask(__name__)
 @app.route('/', methods=["GET"])
 def home():
-    return "POST image on /holo_frame"
+    return "<p>POST image on /holo_frame</p> <p> Body (form-data): 'id' (string) and 'img' (string, image in base64 encoding) </p> <p>GET result on returned URL (/holo_result/<id>)</p> <p> Return json including at least 'msg', also 'data' if status code is 200</p>"
 
 @app.route('/holo_frame', methods=["POST"])
 def holo_frame():
-    # TODO: Identificar tanto en servidor como en cliente con algun tipo de id cada frame para poder asociarlos a las posiciones 3D
-    im = Image.open(BytesIO(base64.b64decode(request.form['img'])))
-    holo_frame_queue.put(im)
-    return jsonify({'msg':'success', 'size':[im.width, im.height]}), 202
+    if request.form.keys() != {'id','img'}:
+        return jsonify({'msg':'invalid form-data'}), 400
+    id = request.form['id']
+    if id in processing_ids:
+        return jsonify({'msg':'non valid id'}), 400
+    try:
+        im = Image.open(BytesIO(base64.b64decode(request.form['img']))).convert(mode='RGB')
+    except UnidentifiedImageError:
+        print('Controlled ERROR: UnidentifiedImageError')
+        return jsonify({'msg':'non valid image data'}), 400
+
+    holo_frame_queue.put((id,im))
+    processing_ids.add(id)
+    return jsonify({'msg':'success', 'get':f'{request.url_root}holo_result/{id}'}), 202
 
 @app.route('/holo_result/<id>', methods=["GET"])
 def holo_result(id):
-    id = int(id)
     if id in holo_results:
         res = holo_results[id]
         del holo_results[id]
         return jsonify({'msg':'sucess', 'data': res}), 200
-    else: #TODO: Diferenciar entre los pendientes y los que no existen
-        return "in_progress", 102 # In progress
+    elif id in processing_ids: #TODO: Diferenciar entre los pendientes y los que no existen
+        return jsonify({'msg':'in progress'}), 102 # In progress
+    else:
+        return jsonify({'msg':'id does not exist'}), 404
 
 
 
@@ -297,7 +312,6 @@ def main():
 
     # get wrapped inference object
     yolo = YOLO_np(**vars(args))
-
     if args.dump_model:
         """
         Dump out training model to inference model
@@ -320,7 +334,7 @@ def main():
     elif args.holo:
         # threading.Thread(target=lambda: worker(yolo), daemon=True).start()
         # app.run(debug=True, use_reloader=False)
-        threading.Thread(target= lambda: app.run(debug=True, use_reloader=False), daemon=True).start()
+        threading.Thread(target= lambda: app.run(debug=True, use_reloader=False, host="0.0.0.0"), daemon=True).start()
         worker(yolo)
 
 

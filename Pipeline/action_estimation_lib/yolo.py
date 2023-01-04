@@ -141,7 +141,7 @@ class YOLO_np(object):
         if self.scene_recognition is not None:
             current_scene, actions_at_location = self.scene_recognition.predict(image)
             print("Found location: " + current_scene)
-        print("Inference time: {:.8f}s".format(end - start))
+            print("Inference time: {:.8f}s".format(end - start))
         end = time.time()
 
         start = time.time()
