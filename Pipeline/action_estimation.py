@@ -31,10 +31,10 @@ holo_results = {}
 def worker(yolo):
     while True:
         id, frame = holo_frame_queue.get()
-        r_image, _, _, _, r_relevant_objects = yolo.detect_image(frame)
-        # holo_results[1] = json.dumps(r_relevant_objects, indent=4)
-        holo_results[id] = r_relevant_objects
-        print(r_relevant_objects)
+        r_image, _, _, _, r_holo = yolo.detect_image(frame)
+        # r_relevant_objects, r_action_intersection = r_holo
+        print(f'Processing id: {id}')
+        holo_results[id] = r_holo
         processing_ids.remove(id)
         r_image.save("tmp.png")
         holo_frame_queue.task_done()
@@ -65,11 +65,11 @@ def holo_frame():
 @app.route('/holo_result/<id>', methods=["GET"])
 def holo_result(id):
     if id in holo_results:
-        res = holo_results[id]
+        data, action_intersection = holo_results[id]
         del holo_results[id]
-        return jsonify({'msg':'sucess', 'data': res}), 200
-    elif id in processing_ids: #TODO: Diferenciar entre los pendientes y los que no existen
-        return jsonify({'msg':'in progress'}), 102 # In progress
+        return jsonify({'msg':'success', 'data': data, 'actions': action_intersection}), 200
+    elif id in processing_ids:
+        return jsonify({'msg':'in progress'}), 503 # Try again later
     else:
         return jsonify({'msg':'id does not exist'}), 404
 

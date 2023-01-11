@@ -241,7 +241,7 @@ class YOLO_np(object):
             relevant_objects.append(obj)
 
 
-        return Image.fromarray(image_array), out_boxes, out_classnames, out_scores, relevant_objects
+        return Image.fromarray(image_array), out_boxes, out_classnames, out_scores, (relevant_objects, final_actions)
 
 
     def predict(self, image_data, image_shape, model_type, yolo_model, class_names):
