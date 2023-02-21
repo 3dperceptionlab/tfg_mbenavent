@@ -4,8 +4,6 @@ This repository contains the developments started in the Bacherlor's Degree in C
 
 The aim of this project is to provide a context-based action estimation based on the recognition of the objects and the hands in the scene.
 
----
-
 ## Project Structure
 
 The folders `ADL`, `EGO-DAILY` and `EPIC-KITCHENS` (we use [Epic-Kitchens 55](https://github.com/epic-kitchens/epic-kitchens-55-annotations)) contain the annotations and scripts to extract the relevant ones for those datasets, used to train YOLO models.
@@ -13,6 +11,10 @@ The folders `ADL`, `EGO-DAILY` and `EPIC-KITCHENS` (we use [Epic-Kitchens 55](ht
 The `MIT_INDOOR` folder contains the annotations and code for fine-tuning and running VGG16 architecure for scene recognition.
 
 The [`Pipeline`](Pipeline) folder contains the YOLO architecture and the action estimation architecture, further details are provided when accessing the folder.
+
+## Docker
+
+A docker image and launch script is provided to run this architecture.
 
 ## Citations
 
