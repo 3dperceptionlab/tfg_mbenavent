@@ -1,0 +1,26 @@
+[
+    {
+        "class": "container",
+        "actions": [
+            "combing hair",
+            "brushing teeth",
+            "washing hands/face",
+            "drying hands/face",
+            "laundry",
+            "washing dishes",
+            "making tea",
+            "making coffee",
+            "making cold food/snack",
+            "eating food/snack",
+            "mopping in kitchen",
+            "taking pills",
+            "grabbing water from tap",
+            "cleaning house",
+            "drinking coffee/tea"
+        ],
+        "xmin": 37,
+        "ymin": 20,
+        "xmax": 1876,
+        "ymax": 1080
+    }
+]

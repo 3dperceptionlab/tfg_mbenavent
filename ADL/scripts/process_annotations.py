@@ -8,7 +8,7 @@ from statistics import mean, median
 
 obj_annotation_path = 'ADL_annotations/object_annotation/'
 action_annotation_path = 'ADL_annotations/action_annotation/'
-output_path = 'ADL_YOLO_annotations'
+output_path = 'new_annotations'
 frame_rate = 30
 classes = {}
 class_counter = 0
@@ -41,6 +41,7 @@ def get_annotations():
     y = []
     global instances_per_class
     global classes
+    global output_path
     obj_annotation_files = listdir(obj_annotation_path)
     for filename in obj_annotation_files:
         if 'frames' not in filename: # Consider only files with name: object_annot_P_XX.txt
@@ -52,7 +53,7 @@ def get_annotations():
     plt.bar(instances_per_class.keys(), instances_per_class.values())
     plt.subplots_adjust(bottom=0.3)
     plt.xticks(rotation=90)
-    plt.savefig('plot_classes_full.jpg')
+    plt.savefig(path.join(output_path,'plot_classes_full.jpg'))
     print(f'Mean: {mean(instances_per_class.values())}') # 2931.5
     print(f'Median: {median(instances_per_class.values())}') # 2931.5
     
@@ -61,7 +62,7 @@ def get_annotations():
     plt.bar(instances_per_class.keys(), instances_per_class.values())
     plt.subplots_adjust(bottom=0.3)
     plt.xticks(rotation=90)
-    plt.savefig('plot_classes_reduced.jpg')
+    plt.savefig(path.join(output_path, 'plot_classes_reduced.jpg'))
 
     old_classes = {k: v for k, v in classes.items() if k in instances_per_class.keys()}
     count = 0
@@ -164,14 +165,10 @@ def main():
     save_splits(x,y)
     del y
     save_classes()
-    # actions, actions_per_actor = get_actions()
-    # save_actions_per_noun(x, actions, actions_per_actor)
+    actions, actions_per_actor = get_actions()
+    save_actions_per_noun(x, actions, actions_per_actor)
     # Todas las clases tienen acciones asociadas
     
-    
-    # TODO: entrenamiento -> tamaño de imagenes reducido para ir más rapido??
-    #       tf/ft desde EK o imagenet?
-    #       yolov4 (mejor modelo)
 
 if __name__ == '__main__':
     main()

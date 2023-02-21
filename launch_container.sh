@@ -10,6 +10,7 @@ docker run -d --gpus '"device=1"' --rm -it \
 	--workdir="/workspace" \
 	-v $XSOCK:$XSOCK:rw \
 	--net=host \
-        --env="DISPLAY" \
+	--env="DISPLAY" \
 	--name $containerName \
-	mbenavent/david8862-yolokeras:latest bash
+	mbenavent/yolokeras:latest bash
+

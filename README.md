@@ -1,11 +1,42 @@
-# tfg_mbenavent
-This repository contains the experimentation code for the Thesis in the Bachelor's Degree In Computer Engineering. The best trained models can be found at [Google Drive](https://drive.google.com/drive/folders/14oEQLqCH5dQc-SHTVZRP0eMhLtSvoFK7?usp=sharing).
+# Context-Based Action Estimation with YOLO
 
-## EGO-DAILY
-This folder contains the Python scripts for processing the annotations for this dataset and the resulting annotations.
+This repository contains the developments started in the Bacherlor's Degree in Computer Science of Manuel Benavent-Lledo and extended for his Master's Thesis. The advances have been also published in international conferences.
 
-## EPIC-KITCHENS
-This folder contains the annotations for the EPIC-KITCHENS dataset, the scripts for analyzing its classes and size and the scripts for obtaining the train and test files. The used files from [EPIC-KITCHENS 55](https://github.com/epic-kitchens/epic-kitchens-55-annotations) are included as well as the processed ones.
+The aim of this project is to provide a context-based action estimation based on the recognition of the objects and the hands in the scene.
 
-## YOLO-keras
-This folder contains the YOLOv3 implementation, from the [original implementation](https://github.com/david8862/keras-YOLOv3-model-set) some modifications have been made a recognition pipeline for objects, hands and actions inference included.
+## Project Structure
+
+The folders `ADL`, `EGO-DAILY` and `EPIC-KITCHENS` (we use [Epic-Kitchens 55](https://github.com/epic-kitchens/epic-kitchens-55-annotations)) contain the annotations and scripts to extract the relevant ones for those datasets, used to train YOLO models.
+
+The `MIT_INDOOR` folder contains the annotations and code for fine-tuning and running VGG16 architecure for scene recognition.
+
+The [`Pipeline`](Pipeline) folder contains the YOLO architecture and the action estimation architecture, further details are provided when accessing the folder.
+
+## Docker
+
+A docker image and launch script is provided to run this architecture.
+
+## Citations
+
+The following papers have been published based on the different versions of the project:
+
+- [Bachelor's Thesis in Computer Science at the University of Alicante](http://hdl.handle.net/10045/116138)
+- [Interaction Estimation in Egocentric Videos via Simultaneous Hand-Object Recognition](https://doi.org/10.1007/978-3-030-87869-6_42). Published in the 16th International Conference on Soft Computing Models in Industrial and Environmental Applications (SOCO 2021). SOCO 2021. Advances in Intelligent Systems and Computing, vol 1401.
+- [Predicting Human-Object Interactions in Egocentric Videos](https://doi.org/10.1109/IJCNN55064.2022.9892910), 2022 International Joint Conference on Neural Networks (IJCNN), Padua, Italy, 2022, pp. 1-7
+- [Master's Thesis in Automation and Robotics at the University of Alicante](http://hdl.handle.net/10045/125585)
+
+```
+@INPROCEEDINGS{9892910,
+  author={Benavent-Lledo, Manuel and Oprea, Sergiu and Castro-Vargas, John Alejandro and Mulero-Perez, David and Garcia-Rodriguez, Jose},
+  booktitle={2022 International Joint Conference on Neural Networks (IJCNN)}, 
+  title={Predicting Human-Object Interactions in Egocentric Videos}, 
+  year={2022},
+  volume={},
+  number={},
+  pages={1-7},
+  doi={10.1109/IJCNN55064.2022.9892910}}
+```
+
+## Author
+
+Manuel Benavent-Lledo ([mbenavent@dtic.ua.es](mailto:mbenavent@dtic.ua.es))
