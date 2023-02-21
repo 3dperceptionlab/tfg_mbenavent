@@ -179,7 +179,7 @@ class YOLO_np(object):
                     '''
                     # hand_center = (round(hand_center[0]),round(hand_center[1]))
                     # overlay = image_array.copy()
-                    # cv2.circle(overlay, hand_center, round(best_distance + extra_area), (0, 0, 255), -1)
+                    # cv2.circle(overlay, hand_center, round(best_distance + extra_area), (255, 153, 51), -1)
                     # opacity = 0.2
                     # cv2.addWeighted(overlay, opacity, image_array, 1 - opacity, 0, image_array)
                     for index, distance in enumerate(distances):

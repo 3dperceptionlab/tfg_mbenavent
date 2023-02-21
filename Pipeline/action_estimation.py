@@ -31,12 +31,17 @@ holo_results = {}
 def worker(yolo):
     while True:
         id, frame = holo_frame_queue.get()
-        r_image, _, _, _, r_holo = yolo.detect_image(frame)
+        # frame.save(f"HOLO_RESULTS/raw/{id}.png")
+        r_image, boxes, classes, _, r_holo = yolo.detect_image(frame)
         # r_relevant_objects, r_action_intersection = r_holo
         print(f'Processing id: {id}')
         holo_results[id] = r_holo
         processing_ids.remove(id)
-        r_image.save("tmp.png")
+        with open('tmp.txt', 'w') as f:
+            f.write(f'size: {frame.size} \n')
+            f.write(f'bounding boxes: {boxes}')
+            f.write(f'classes: {classes}')
+        # r_image.save(f"HOLO_RESULTS/processed/{id}.png")
         holo_frame_queue.task_done()
 
 
