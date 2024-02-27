@@ -4,7 +4,7 @@
 from tensorflow.keras.optimizers import Adam, RMSprop, SGD
 from tensorflow.keras.optimizers.schedules import ExponentialDecay, PolynomialDecay, PiecewiseConstantDecay
 from tensorflow.keras.experimental import CosineDecay
-from tensorflow_model_optimization.sparsity import keras as sparsity
+#from tensorflow_model_optimization.sparsity import keras as sparsity
 import tensorflow.keras.backend as K
 
 

@@ -1,6 +1,6 @@
-FROM tensorflow/tensorflow:1.6.0-gpu-py3
+FROM tensorflow/tensorflow:1.15.4-gpu
 RUN apt update
-#RUN apt install --assume-yes python3-pip
-RUN apt install --assume-yes libgl1-mesa-glx
+RUN apt install --assume-yes libgl1-mesa-glx cmake
 RUN pip3 install --upgrade pip
-RUN pip3 install keras==2.1.5 pillow matplotlib opencv-python numpy
+RUN pip install keras==2.3.0 pillow matplotlib opencv-python numpy flask imgaug pandas sklearn
+#tensorflow_model_optimization

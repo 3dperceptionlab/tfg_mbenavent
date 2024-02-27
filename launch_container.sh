@@ -6,11 +6,9 @@ sleep 3 && \
 docker run -d --gpus '"device=1"' --rm -it \
 	--volume="/home/mbenavent/workspace:/workspace:rw" \
 	--volume="/mnt/md1/datasets/:/datasets:ro" \
-	--volume=$HOME/.Xauthority:/root/.Xauthority:ro \
 	--workdir="/workspace" \
-	-v $XSOCK:$XSOCK:rw \
 	--net=host \
 	--env="DISPLAY" \
 	--name $containerName \
-	mbenavent/yolokeras:latest bash
+	mbenavent/holoyolo:latest bash
 

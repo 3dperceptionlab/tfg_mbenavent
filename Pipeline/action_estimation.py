@@ -30,6 +30,7 @@ holo_results = {}
 
 def worker(yolo):
     while True:
+        start = time.time()
         id, frame = holo_frame_queue.get()
         # frame.save(f"HOLO_RESULTS/raw/{id}.png")
         r_image, boxes, classes, _, r_holo = yolo.detect_image(frame)
@@ -43,6 +44,8 @@ def worker(yolo):
             f.write(f'classes: {classes}')
         # r_image.save(f"HOLO_RESULTS/processed/{id}.png")
         holo_frame_queue.task_done()
+        end = time.time()
+        print(f'Processing time: {end-start}')
 
 
 app = Flask(__name__)
